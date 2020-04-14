@@ -1,8 +1,106 @@
-body {
+
+/**
+* Spotify Colors: https://usbrandcolors.com/spotify-colors/
+*/
+
+body{
+  background-color: #191414;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+h1{
+  color: beige;
+}
+footer {
+  background-color: #1DB954;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1em;
+
+  text-align: center;
+}
+
+
+#title{
+
+  background-color: #1DB954;
+  padding: 2em;
+  border-radius: 0.5em;
+
+}
+#title h1{
+  color: #191414;
+  text-decoration: underline;
+  text-align: center;
+  
+  
+
+}
+.full-content{
+  background-color: #1DB954;
+  border-radius: 3em;
+  text-align: center;
+  margin:1em;
+  size: 3em;
+}
+
+.full-content #songQuery{
+  /* size: 10em; */
+  background-color: #1DB954;
+  color: white;
+  font-size: 2em;
+  margin-bottom: 10px;
+
+}
+
+#webplayer{
+  background-color: #1DB954;
+  border-radius: 0.5em;
+  text-align: center;
+  margin:1em;
+
+}
+
+#readIn{
+  background-color: #1DB954;
+  border-radius: 0.5em;
+  text-align: center;
+  margin:1em;
+
+}
+.column {
+  float: left;
+  width: 30%;
+}
+
+.row {
+  margin: 4em;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+
+/* Mobile Behaviour*/
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+  /* .row {
+      margin: 4em; 
+      border: white;
+      border-radius: 1em;
+  } */
 }
