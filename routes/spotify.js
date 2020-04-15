@@ -103,6 +103,35 @@ router.get('/', function(req, res, next) {
 
 
 
+router.get('/search', function(req, res, next) {
+    console.log(req.query);
+    
+    var url = 'https://api.spotify.com/v1/search?';
+    url+= querystring.stringify({
+        q: req.query.song_name, 
+        type: 'track', 
+        limit: '1'
+    });
+    
+    console.log('URL: ', url);
+    
+       var options = {
+          url: url,
+          headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+          json: true
+        };
+
+        //Use token to access user data through Spotify API
+        request.get(options, function(error, response, body) {
+          console.log('LOGGING:' ,body);
+            res.send(body);
+        });
+});
+
+
+
+
+
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
