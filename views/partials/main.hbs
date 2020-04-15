@@ -71,13 +71,18 @@
 //   });
     
        $('document').ready(function(){
+           //When form is submited
        $('#form').on('submit', function (ev) {
-            ev.preventDefault();
+           //Stop default post call
+           ev.preventDefault();
            
+           //Variable for API call data
            var data;
            
+           //Request to server
+           //Client --> Server --> Spotify --> Server --> Client
            $.ajax({
-               url: '/spotify/search',
+               url: '/spotify/search/track',
                headers: {
                    'Authorization': 'Bearer ' + access_token
                },
@@ -89,6 +94,7 @@
                error: error
             });
            
+           //This is were you should populate the HTML with info
            function success(data) {
                console.log(data);
                document.getElementById("song-data").innerText = 'This song was created by ' + data.tracks.items[0].artists[0].name;
@@ -97,7 +103,7 @@
 }
            
 });
-   });
+});
     
     
 </script>

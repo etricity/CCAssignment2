@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies --> Imports
- */
+// Module dependencies --> Imports
 var app = require('../app');
 
 //Test purposes
