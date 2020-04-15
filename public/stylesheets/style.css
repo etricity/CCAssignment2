@@ -1,28 +1,21 @@
 
 /**
 * Spotify Colors: https://usbrandcolors.com/spotify-colors/
+* #191414
+* #1DB954
 */
 
 body{
-  background-color: #191414;
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
-h1{
-  color: beige;
+  background-color: #1DB954;
 }
 footer {
-  background-color: #1DB954;
+  background-color: #191414;
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   padding: 1em;
-
+ color: #1DB954;
   text-align: center;
 }
 
@@ -38,8 +31,6 @@ footer {
   color: #191414;
   text-decoration: underline;
   text-align: center;
-  
-  
 
 }
 .full-content{
@@ -90,7 +81,19 @@ footer {
   clear: both;
 }
 
+#table-div{
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin:1em;
+  align-content: center;
 
+}
+
+#user-Table tr{
+ color: #1DB954;
+  border-radius: 0.5em;
+
+}
 
 
 /* Mobile Behaviour*/
