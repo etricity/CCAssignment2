@@ -1,8 +1,162 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+
+/**
+* Spotify Colors: https://usbrandcolors.com/spotify-colors/
+* #191414
+* #1DB954
+*/
+
+body{
+  background-color: #1DB954;
+  margin-left: 160px;
+}
+footer {
+  background-color: #191414;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1em;
+ color: #1DB954;
+  text-align: center;
 }
 
-a {
-  color: #00B7FF;
+nav{
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
 }
+#title{
+
+  background-color: #1DB954;
+  padding: 2em;
+  border-radius: 0.5em;
+
+}
+#title h1{
+  color: #191414;
+  text-decoration: underline;
+  text-align: center;
+
+}
+.full-content{
+  background-color: #191414;
+  border-radius: 3em;
+  text-align: center;
+  margin:1em;
+  size: 3em;
+  padding: 2em;
+  color:#1DB954 ;
+  /* display: inline-block; */
+}
+nav .full-content:hover{
+  color:#191414 ;
+  background-color: #1DB954;
+
+
+
+}
+
+
+.full-content #songQuery{
+  /* size: 10em; */
+  background-color: #1DB954;
+  color: white;
+  font-size: 2em;
+  margin-bottom: 10px;
+
+}
+nav .bottom-content{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #1DB954;
+  border-radius: 3em;
+  margin:1em;
+  size: 2em;
+  padding: 1em;
+}
+
+#webplayer{
+  background-color: #1DB954;
+  border-radius: 0.5em;
+  text-align: center;
+  margin:1em;
+
+}
+
+#readIn{
+  background-color: #1DB954;
+  border-radius: 0.5em;
+  text-align: center;
+  margin:1em;
+
+}
+.column {
+  float: left;
+  width: 30%;
+}
+
+.row {
+  margin: 4em;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#table-div{
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin:1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+}
+
+#user-Table tr{
+ color: #1DB954;
+  border-radius: 0.5em;
+
+}
+
+#song-div{
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin:1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+  visibility: hidden;
+
+}
+
+#song-Table tr{
+  color: #1DB954;
+   border-radius: 0.5em;
+}
+
+
+/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+  /* .row {
+      margin: 4em; 
+      border: white;
+      border-radius: 1em;
+  } */
+}
+
+
+

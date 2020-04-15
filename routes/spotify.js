@@ -13,7 +13,7 @@ var redirect_uri = 'https://spade-274202.ts.r.appspot.com/spotify/callback';
 var stateKey = 'spotify_auth_state';
 
 //Comment out line below for GCP : Uncomment line to test locally (localhost 8080)
-redirect_uri = 'http://localhost:8080/spotify/callback';
+// redirect_uri = 'http://localhost:8080/spotify/callback';
 
 
 
