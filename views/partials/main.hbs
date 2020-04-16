@@ -14,6 +14,7 @@
     <p> S.P.A.D.E</p>
   </div>
   <div class='bottom-content'>
+    <a id = "webplayer">Spotify Web Player</a>
     <a href="https://www.spotify.com/au/"> Go To Spotify</a>
   </div>
 </nav>
@@ -44,7 +45,7 @@
       </tr>
     </table>
   </div>
-  
+
   <div id='song-div'>
     <table id='song-Table'>
       <tr>
@@ -65,7 +66,7 @@
       </tr>
     </table>
   </div>
-  
+
 
 
 
@@ -117,6 +118,10 @@
           paintPage(response);
         }
       });
+
+      var codes = window.location.hash.substr(1);
+      var link = "/spotify/webplayer/#" + codes;
+      document.getElementById("webplayer").setAttribute("href",link);
     }
 
 
