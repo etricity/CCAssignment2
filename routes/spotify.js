@@ -5,6 +5,7 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var request = require('request');
+var async = require('async');
 
 //Spotify authentication variables
 var client_id = '648d57bb4a724393b2bafbb05b3c73d3';
@@ -13,7 +14,7 @@ var redirect_uri = 'https://spade-274202.ts.r.appspot.com/spotify/callback';
 var stateKey = 'spotify_auth_state';
 
 //Comment out line below for GCP : Uncomment line to test locally (localhost 8080)
- redirect_uri = 'http://localhost:8080/spotify/callback';
+redirect_uri = 'http://localhost:8080/spotify/callback';
 
 
 
@@ -97,40 +98,99 @@ router.get('/', function(req, res, next) {
     res.render('main');
 });
 
+router.get('/search', function(req, res, next) {
 
+  var data = [];
+  console.log(data);
 
+  //Waterfall runs array of functions asynchronously
+  async.waterfall([
 
-//Search Song (/spotify/search/track)
-router.get('/search/track', function(req, res, next) {
-    //API URL + parameters
-    var url = 'https://api.spotify.com/v1/search?';
-    url+= querystring.stringify({
-        q: req.query.song_name,
-        type: 'track',
-        limit: '1'
-    });
+    //Get track data W1
+    function(callback) {
+      var url = 'https://api.spotify.com/v1/search?';
+      url+= querystring.stringify({
+          q: req.query.song_name,
+          type: 'track',
+          limit: '1'
+      });
 
-//Use token to access Spotify API
-       var options = {
-          url: url,
-          headers: { 'Authorization': 'Bearer ' + req.query.access_token },
-          json: true
-        };
-        request.get(options, function(error, response, body) {
-            console.log('Track Data:', body);
-            //Send data back to client
-            res.send(body);
-        });
-});
+        //Use token to access Spotify API
+         var options = {
+            url: url,
+            headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+            json: true
+          };
+          request.get(options, function(error, response, trackData) {
+              console.log('Track Data:', trackData);
+              data.push(trackData);
+              //Passes trackData to W2
+              callback(null, trackData);
+          });
 
-//Search Artist (/spotify/search/artist)
-router.get('/search/artist', function(req, res, next) {
+        //Get artist & album data
+        //W2
+    }, function(trackData, callback) {
 
-});
+      //Parallel runs array of functions synchronously
+      async.parallel([
 
-//Search Album (/spotify/search/album)
-router.get('/search/album', function(req, res, next) {
+        //Get artist data P1
+        function(paraCB){
+          var url = 'https://api.spotify.com/v1/search?';
+          url+= querystring.stringify({
+              q: trackData.tracks.items[0].artists[0].name,
+              type: 'artist',
+              limit: '1'
+          });
 
+             var options = {
+                url: url,
+                headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+                json: true
+              };
+              request.get(options, function(error, response, artistData) {
+                  console.log('Artist Data:', artistData);
+                  //Adds artistData to parallel result
+                  paraCB(null, artistData);
+
+              });
+        },
+
+        //Get Album data P2
+        function(paraCB) {
+          var url = 'https://api.spotify.com/v1/search?';
+          url+= querystring.stringify({
+              q: trackData.tracks.items[0].album.name,
+              type: 'album',
+              limit: '1'
+          });
+
+             var options = {
+                url: url,
+                headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+                json: true
+              };
+              request.get(options, function(error, response, albumData) {
+                  console.log('Album Data:', albumData);
+                  //Adds albumData to parallel result
+                  paraCB(null, albumData);
+              });
+        }
+        //Callback method for Parallel
+      ], function paraCB(error, results){
+        //Fuses W1 & W2 data together
+        data.push.apply(data, results);
+        //Passes data to Waterfall callback
+        callback(null, data);
+      });
+    }
+  ], function callback(err, result) {
+    console.log('DATA: ' ,result);
+    //Sends data to the client as an array of JSON Objects {trackData, artistData, albumData}
+    res.send(result);
+  }
+  );
 });
 
 //Webplayer API
