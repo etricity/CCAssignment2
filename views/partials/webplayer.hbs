@@ -1,0 +1,105 @@
+<h1>Spotify Web Player</h1>
+<p>To get started, open spotify on your local device and connect to the Spotify Web Player device.</p>
+<p id = 'status'> Waiting...</p>
+
+<button id = "play_pause" onclick="playPause()">Play/Pause</button>
+<button id = "vol_up" onclick="volUp()">Increase Volume</button>
+<button id = "vol_down" onclick="volDown()">Decrease Volume</button>
+
+<script src="https://sdk.scdn.co/spotify-player.js"></script>
+
+<script>
+
+//Set initial volume
+  var vol = 0.5;
+
+
+  //Getting parameter codes from URL
+  var params = getHashParams();
+  var access_token = params.access_token,
+      refresh_token = params.refresh_token;
+  //Variable to acccess the player outside of the intialisation
+  var p;
+
+//Setting up Spotify Web Player
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const token = access_token;
+  const player = new Spotify.Player({
+    name: 'S.P.A.D.E Web Player',
+    volume: vol,
+    getOAuthToken: cb => { cb(token);}
+  });
+
+  // Error handling
+  player.addListener('initialization_error', ({ message }) => { console.error(message); });
+  player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  player.addListener('account_error', ({ message }) => { console.error(message); });
+  player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+  // Playback status updates
+  player.addListener('player_state_changed', state => { console.log('Player state changed. State: ', state)});
+
+  //
+  player.addListener('ready', ({ device_id }) => {
+    console.log('Ready with Device ID: ', device_id);
+    document.getElementById("status").innerText = 'Ready to play!'
+
+  });
+
+  // Not Ready
+  player.addListener('not_ready', ({ device_id }) => {
+    console.log('Offline with Device ID: ', device_id);
+    document.getElementById("status").innerText = 'Device Offline!'
+  });
+
+  // Connect to the player!
+  player.connect();
+  p = player;
+};
+
+
+
+//Player Interaction Functions
+function playPause() {
+  p.togglePlay().then(() => {
+  console.log('Playback Toggled.');
+});
+}
+
+function volUp() {
+  if(vol < 0.9) {
+    vol+= 0.1;
+    p.setVolume(vol).then(() => {
+      console.log('Volume Increased.');
+    });
+  }
+
+}
+
+function volDown() {
+  if(vol > 0.1) {
+    vol-= 0.1;
+    p.setVolume(vol).then(() => {
+      console.log('Volume Increased.');
+    });
+  }
+
+  p.nextTrack().then(() => {
+  console.log('Skipped to next track!');
+});
+}
+
+
+//Utility Funtion
+function getHashParams() {
+     var hashParams = {};
+     var e, r = /([^&;=]+)=?([^&;]*)/g,
+         q = window.location.hash.substring(1);
+     while ( e = r.exec(q)) {
+        hashParams[e[1]] = decodeURIComponent(e[2]);
+     }
+     return hashParams;
+   }
+
+
+</script>

@@ -13,14 +13,14 @@ var redirect_uri = 'https://spade-274202.ts.r.appspot.com/spotify/callback';
 var stateKey = 'spotify_auth_state';
 
 //Comment out line below for GCP : Uncomment line to test locally (localhost 8080)
-redirect_uri = 'http://localhost:8080/spotify/callback';
+// redirect_uri = 'http://localhost:8080/spotify/callback';
 
 
 
 //Spotify Authentication Login & Redirect to main page (router.get'/spotify')
 router.get('/login', function(req, res, next) {
     var state = generateRandomString(16);
-    var scope = 'user-read-private user-read-email playlist-read-private';
+    var scope = 'user-read-private user-read-email playlist-read-private streaming';
     res.cookie(stateKey, state);
 
     res.redirect('https://accounts.spotify.com/authorize?' +
@@ -131,6 +131,11 @@ router.get('/search/artist', function(req, res, next) {
 //Search Album (/spotify/search/album)
 router.get('/search/album', function(req, res, next) {
 
+});
+
+//Webplayer API
+router.get('/webplayer', function(req, res, next) {
+  res.render('webplayer');
 });
 
 

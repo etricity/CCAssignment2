@@ -3,17 +3,19 @@
 <form id = 'form'>
     <input id = song-name type = "text"/>
     <button type = submit> Search</button>
-    
+
     <p id = song-data></p>
+
+    <a id = "webplayer">Spotify Web Player</a>
 </form>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script>
-    
+
     var params = getHashParams();
     var access_token = params.access_token,
         refresh_token = params.refresh_token;
-    
+
     //Utility Function
      function getHashParams() {
           var hashParams = {};
@@ -24,10 +26,10 @@
           }
           return hashParams;
         }
-    
+
     //Onload
     window.onload = () => {
-        
+
         $.ajax({
                 url: 'https://api.spotify.com/v1/me',
                 headers: {
@@ -37,48 +39,28 @@
                     console.log(response);
                    document.getElementById("greeting").innerText = response.display_name;
                 }
-            });        
+            });
+
+            var codes = window.location.hash.substr(1);
+                var link = "/spotify/webplayer/#" + codes;
+                document.getElementById("webplayer").setAttribute("href",link);
+
     }
 
 </script>
 
 <script>
-    //Submitting form
-//   $('document').ready(function(){
-//       $('#form').on('submit', function (ev) {
-//            ev.preventDefault();
-//           console.log(params);
-//           
-//           var baseURL = 'https://api.spotify.com/v1/search';
-//           baseURL += '?q=' + document.getElementById("song-name").value + '&type=artist' + '&limit=1';  
-//           
-//           console.log(baseURL);
-//           
-//           $.ajax({
-//               url: baseURL,
-//               headers: {
-//                   'Authorization': 'Bearer ' + access_token
-//               },
-//               success: function(response) {
-//                   console.log(response);
-//                }, 
-//               error: function(err) {
-//                   console.log(err);
-//               }
-//            });
-//           
-//});
-//   });
-    
+
        $('document').ready(function(){
            //When form is submited
+
        $('#form').on('submit', function (ev) {
            //Stop default post call
            ev.preventDefault();
-           
+
            //Variable for API call data
            var data;
-           
+
            //Request to server
            //Client --> Server --> Spotify --> Server --> Client
            $.ajax({
@@ -87,13 +69,13 @@
                    'Authorization': 'Bearer ' + access_token
                },
                data: {
-                   song_name: document.getElementById("song-name").value, 
+                   song_name: document.getElementById("song-name").value,
                    access_token: access_token
                },
-               success: success, 
+               success: success,
                error: error
             });
-           
+
            //This is were you should populate the HTML with info
            function success(data) {
                console.log(data);
@@ -101,9 +83,10 @@
 }
            function error(error) {
 }
-           
+
 });
+
 });
-    
-    
+
+
 </script>
