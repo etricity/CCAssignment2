@@ -3,58 +3,73 @@
 <!--Main document for the Page. Other handlebar files are passed to this for dynamic html-->
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-<nav>
-  <div class='full-content'> <p> S.P.A.D.E</p> </div>
-  <div class = 'bottom-content'>
-    <a href="https://www.spotify.com/au/"> Go To Spotify</a>
-  </div>
-</nav>
+  <head>
+      <meta charset="UTF-8">
+      <title></title>
+      <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+
+
 <body>
-<!--    Handlebar stuff-->
-  <div id='title'>
-<h1 id = 'greeting'></h1>
-</div>
 
-<div id= 'table-div'>
-  <table id='user-Table'>
-    <tr>
-      <td>Name </td>
-      <td id='name'></td>
-    </tr>
-    <tr>
-      <td>Country</td>
-      <td id='country'></td>
-    </tr>
-    <tr>
-      <td>Email</td>
-      <td id='email'></td>
-    </tr>
-    <tr>
-      <td>Product</td>
-      <td id='product'></td>
-    </tr>
-  </table>
-</div>
+  <div class="left">
+    <nav>
+      <div class='full-content'> <p> S.P.A.D.E</p> </div>
+      <div class = 'bottom-content'>
+        <a href="https://www.spotify.com/au/"> Go To Spotify</a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="main">
+  
+    <!--    Handlebar stuff-->
+    <div id='title'>
+      <h1 id = 'greeting'></h1>
+    </div>
+    <div class ="full-content">
+      <form id = 'form'>
+        <p>Search For A Song</p>
+        <input id = 'song-name' type = "text"/>
+        <button type = submit> Search</button>
+      </form>
+    </div>
+  </div>
 
 
-<div class ="full-content">
-  <form id = 'form'>
-    <p>Search For A Song</p>
-      <input id = 'song-name' type = "text"/>
-      <button type = submit> Search</button>
-  </form>
-</div>
+  <div class='right'>
+    <div class="user-Table">
+      <table id='user-Table'>
+        <tr>
+          <td>Name: </td>
+          <td id='name'></td>
+        </tr>
+        <tr>
+          <td>Country: </td>
+          <td id='country'></td>
+        </tr>
+        <tr>
+          <td>Email: </td>
+          <td id='email'></td>
+        </tr>
+        <tr>
+          <td>Product: </td>
+          <td id='product'></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+</body>
 
 
 
 
 <footer> S.P.A.D.E &COPY; </footer>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
 <script>
   window.onload = () => {
@@ -91,12 +106,12 @@
     document.getElementById("email").innerText = response.email;
     document.getElementById("country").innerText = response.country;
     document.getElementById("product").innerText = response.product;
-
-
+  }
+  function paintSong(){
 
   }
-
 </script>
-</body>
+
+
 </html>
 
