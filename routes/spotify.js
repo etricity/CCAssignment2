@@ -106,7 +106,6 @@ router.get('/', function(req, res, next) {
 router.get('/search', function(req, res, next) {
 
   var data = [];
-  console.log(data);
 
   //Waterfall runs array of functions asynchronously
   async.waterfall([
@@ -198,9 +197,13 @@ router.get('/search', function(req, res, next) {
       });
     }
   ], function callback(err, result) {
-    console.log('DATA: ', result);
+
+    //TEST FIREBASE PURPOSES --> REMOVE ON FURTHER DEVELOPMENT
     //Save data in firebase
     firebase.saveData(data);
+    firebase.getData();
+    //END_TEST
+
     //Sends data to the client as an array of JSON Objects {trackData, artistData, albumData}
     res.send(result);
   });
