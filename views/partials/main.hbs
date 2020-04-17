@@ -14,7 +14,7 @@
     <p> S.P.A.D.E</p>
   </div>
   <div class='bottom-content'>
-    <a id = "webplayer">Spotify Web Player</a>
+    <a id="webplayer">Spotify Web Player</a>
     <a href="https://www.spotify.com/au/"> Go To Spotify</a>
   </div>
 </nav>
@@ -87,9 +87,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
   <script>
-
-
-
     var params = getHashParams();
     var access_token = params.access_token,
       refresh_token = params.refresh_token;
@@ -113,7 +110,7 @@
         headers: {
           'Authorization': 'Bearer ' + access_token
         },
-        success: function (response) {
+        success: function(response) {
           console.log(response);
           paintPage(response);
         }
@@ -121,7 +118,7 @@
 
       var codes = window.location.hash.substr(1);
       var link = "/spotify/webplayer/#" + codes;
-      document.getElementById("webplayer").setAttribute("href",link);
+      document.getElementById("webplayer").setAttribute("href", link);
     }
 
 
@@ -135,14 +132,11 @@
 
 
     }
-
   </script>
   <script>
-
-
-    $('document').ready(function () {
+    $('document').ready(function() {
       //When form is submited
-      $('#form').on('submit', function (ev) {
+      $('#form').on('submit', function(ev) {
         //Stop default post call
         ev.preventDefault();
 
@@ -169,11 +163,12 @@
           console.log(data);
           paintSongData(data);
         }
-        function error(error) {
-        }
+
+        function error(error) {}
 
       });
     });
+
     function paintSongData(data) {
       document.getElementById("song-data").innerText = 'This song was created by ' + data.tracks.items[0].artists[0].name;
       document.getElementById("result-name").innerText = data.tracks.items[0].name;
@@ -182,7 +177,6 @@
       document.getElementById("popularity").innerText = data.tracks.items[0].popularity;
       document.getElementById("song-div").style.visibility = "visible";
     }
-
   </script>
 
 

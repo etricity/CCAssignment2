@@ -6,6 +6,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var request = require('request');
 var async = require('async');
+var firebase = require('./firebase');
 
 //Spotify authentication variables
 var client_id = '648d57bb4a724393b2bafbb05b3c73d3';
@@ -20,12 +21,12 @@ redirect_uri = 'http://localhost:8080/spotify/callback';
 
 //Spotify Authentication Login & Redirect to main page (router.get'/spotify')
 router.get('/login', function(req, res, next) {
-    var state = generateRandomString(16);
-    var scope = 'user-read-private user-read-email playlist-read-private streaming';
-    res.cookie(stateKey, state);
+  var state = generateRandomString(16);
+  var scope = 'user-read-private user-read-email playlist-read-private streaming';
+  res.cookie(stateKey, state);
 
-    res.redirect('https://accounts.spotify.com/authorize?' +
-                querystring.stringify({
+  res.redirect('https://accounts.spotify.com/authorize?' +
+    querystring.stringify({
       client_id: client_id,
       response_type: 'code',
       redirect_uri: redirect_uri,
@@ -41,42 +42,46 @@ router.get('/callback', function(req, res, next) {
   var state = req.query.state || null;
   var cookieState = req.cookies ? req.cookies[stateKey] : null;
 
-    //Reached this page witout correct authentication
-    if (state === null || state !== cookieState) {
-      res.render('error', { message: 'State Mismatch!' });
-      //successful callback
-      } else {
+  //Reached this page witout correct authentication
+  if (state === null || state !== cookieState) {
+    res.render('error', {
+      message: 'State Mismatch!'
+    });
+    //successful callback
+  } else {
 
-      res.clearCookie(stateKey);
-      var authOptions = {
-          url: 'https://accounts.spotify.com/api/token',
-          form: {
-              code: code,
-              redirect_uri: redirect_uri,
-              grant_type: 'authorization_code'
-          },
-          headers: {
-              'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-          },
-          json: true
+    res.clearCookie(stateKey);
+    var authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      form: {
+        code: code,
+        redirect_uri: redirect_uri,
+        grant_type: 'authorization_code'
+      },
+      headers: {
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+      },
+      json: true
     };
 
     //Request access tokens
-      request.post(authOptions, function(error, response, body) {
-          //IF no Request Error
-          if (!error && response.statusCode === 200) {
-            var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+    request.post(authOptions, function(error, response, body) {
+      //IF no Request Error
+      if (!error && response.statusCode === 200) {
+        var access_token = body.access_token,
+          refresh_token = body.refresh_token;
 
         //Use token to access user data through Spotify API
         var options = {
           url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
+          headers: {
+            'Authorization': 'Bearer ' + access_token
+          },
           json: true
         };
         request.get(options, function(error, response, body) {
           //Log user data
-          console.log('User Data: ' ,body);
+          console.log('User Data: ', body);
         });
 
         //Success --> redirected to main page
@@ -95,7 +100,7 @@ router.get('/callback', function(req, res, next) {
 
 //Main page (/spotify)
 router.get('/', function(req, res, next) {
-    res.render('main');
+  res.render('main');
 });
 
 router.get('/search', function(req, res, next) {
@@ -109,76 +114,83 @@ router.get('/search', function(req, res, next) {
     //Get track data W1
     function(callback) {
       var url = 'https://api.spotify.com/v1/search?';
-      url+= querystring.stringify({
-          q: req.query.song_name,
-          type: 'track',
-          limit: '1'
+      url += querystring.stringify({
+        q: req.query.song_name,
+        type: 'track',
+        limit: '1'
       });
 
-        //Use token to access Spotify API
-         var options = {
-            url: url,
-            headers: { 'Authorization': 'Bearer ' + req.query.access_token },
-            json: true
-          };
-          request.get(options, function(error, response, trackData) {
-              console.log('Track Data:', trackData);
-              data.push(trackData);
-              //Passes trackData to W2
-              callback(null, trackData);
-          });
+      //Use token to access Spotify API
+      var options = {
+        url: url,
+        headers: {
+          'Authorization': 'Bearer ' + req.query.access_token
+        },
+        json: true
+      };
+      request.get(options, function(error, response, trackData) {
+        console.log('Track Data:', trackData);
+        data.push(trackData);
+        //Passes trackData to W2
+        callback(null, trackData);
+      });
 
-        //Get artist & album data
-        //W2
-    }, function(trackData, callback) {
+      //Get artist & album data
+      //W2
+    },
+    function(trackData, callback) {
 
       //Parallel runs array of functions synchronously
       async.parallel([
 
         //Get artist data P1
-        function(paraCB){
+        function(paraCB) {
           var url = 'https://api.spotify.com/v1/search?';
-          url+= querystring.stringify({
-              q: trackData.tracks.items[0].artists[0].name,
-              type: 'artist',
-              limit: '1'
+          url += querystring.stringify({
+            q: trackData.tracks.items[0].artists[0].name,
+            type: 'artist',
+            limit: '1'
           });
 
-             var options = {
-                url: url,
-                headers: { 'Authorization': 'Bearer ' + req.query.access_token },
-                json: true
-              };
-              request.get(options, function(error, response, artistData) {
-                  console.log('Artist Data:', artistData);
-                  //Adds artistData to parallel result
-                  paraCB(null, artistData);
+          var options = {
+            url: url,
+            headers: {
+              'Authorization': 'Bearer ' + req.query.access_token
+            },
+            json: true
+          };
+          request.get(options, function(error, response, artistData) {
+            console.log('Artist Data:', artistData);
+            //Adds artistData to parallel result
+            paraCB(null, artistData);
 
-              });
+          });
         },
 
         //Get Album data P2
         function(paraCB) {
           var url = 'https://api.spotify.com/v1/search?';
-          url+= querystring.stringify({
-              q: trackData.tracks.items[0].album.name,
-              type: 'album',
-              limit: '1'
+          url += querystring.stringify({
+            q: trackData.tracks.items[0].album.name,
+            type: 'album',
+            limit: '1'
           });
 
-             var options = {
-                url: url,
-                headers: { 'Authorization': 'Bearer ' + req.query.access_token },
-                json: true
-              };
-              request.get(options, function(error, response, albumData) {
-                  console.log('Album Data:', albumData);
-                  //Adds albumData to parallel result
-                  paraCB(null, albumData);
-              });
+          var options = {
+            url: url,
+            headers: {
+              'Authorization': 'Bearer ' + req.query.access_token
+            },
+            json: true
+          };
+          request.get(options, function(error, response, albumData) {
+            console.log('Album Data:', albumData);
+            //Adds albumData to parallel result
+            paraCB(null, albumData);
+          });
         }
         //Callback method for Parallel
-      ], function paraCB(error, results){
+      ], function paraCB(error, results) {
         //Fuses W1 & W2 data together
         data.push.apply(data, results);
         //Passes data to Waterfall callback
@@ -186,11 +198,12 @@ router.get('/search', function(req, res, next) {
       });
     }
   ], function callback(err, result) {
-    console.log('DATA: ' ,result);
+    console.log('DATA: ', result);
+    //Save data in firebase
+    firebase.saveData(data);
     //Sends data to the client as an array of JSON Objects {trackData, artistData, albumData}
     res.send(result);
-  }
-  );
+  });
 });
 
 //Webplayer API
@@ -201,7 +214,7 @@ router.get('/webplayer', function(req, res, next) {
 
 //Utility methods
 
-  //Helps autenticate user
+//Helps autenticate user
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

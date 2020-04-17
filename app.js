@@ -18,18 +18,24 @@ var app = express();
 
 
 // view engine setup
-app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts/'}));
+app.engine('hbs', hbs({
+  extname: 'hbs',
+  defaultLayout: 'layout',
+  layoutsDir: __dirname + '/views/layouts/'
+}));
 app.set('views', path.join(__dirname, 'views/partials'));
 app.set('view engine', 'hbs');
 
 //Middleware --> Runs before any request get/post
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
-    .use(cors())
-    .use(cookieParser());
+  .use(cors())
+  .use(cookieParser());
 
 app.use('/', routes);
 app.use('/spotify', spotify);
