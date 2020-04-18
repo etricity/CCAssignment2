@@ -1,24 +1,13 @@
-var firebase = require("firebase/app");
-
-// Add the Firebase products that you want to use
-require("firebase/auth");
-require("firebase/firestore");
-require("firebase/database");
+var admin = require("firebase-admin");
+var serviceAccount = require("./ServiceAccountKey.json");
 var querystring = require('querystring');
 var request = require('request');
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAJ0u31bG_VKckUgdaRf16Hk20vWB4Kl2M",
-  authDomain: "spade-274202.firebaseapp.com",
-  databaseURL: "https://spade-274202.firebaseio.com",
-  projectId: "spade-274202",
-  storageBucket: "spade-274202.appspot.com",
-  messagingSenderId: "892475686277",
-  appId: "1:892475686277:web:a7c1c70a90863a2add98ec",
-  measurementId: "G-WCF83GY6G1"
-};
-firebase.initializeApp(firebaseConfig);
-var db = firebase.database();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://spade-274202.firebaseio.com"
+});
+var db = admin.database();
 
 module.exports = {
   //EN_TEST-- REMOVE ON FURTHER DEVELOPMENT

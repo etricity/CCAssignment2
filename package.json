@@ -13,7 +13,6 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-handlebars": "^4.0.3",
-    "firebase": "^7.14.1",
     "firebase-admin": "^8.10.0",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.0",
