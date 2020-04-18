@@ -81,8 +81,10 @@ router.get('/callback', function(req, res, next) {
         };
         request.get(options, function(error, response, body) {
           //Log user data
-          console.log('User Data: ', body);
-          firebase.logUser(body);
+          if (!error && response.statusCode == 200) {
+            console.log('User Data: ', body);
+            firebase.logUser(body);
+          }
         });
 
         //Success --> redirected to main page
@@ -129,10 +131,12 @@ router.get('/search', function(req, res, next) {
         json: true
       };
       request.get(options, function(error, response, trackData) {
+            if (!error && response.statusCode == 200) {
         console.log('Track Data:', trackData);
         data.push(trackData);
         //Passes trackData to W2
         callback(null, trackData);
+      }
       });
 
       //Get artist & album data
@@ -160,10 +164,11 @@ router.get('/search', function(req, res, next) {
             json: true
           };
           request.get(options, function(error, response, artistData) {
+              if (!error && response.statusCode == 200) {
             console.log('Artist Data:', artistData);
             //Adds artistData to parallel result
             paraCB(null, artistData);
-
+          }
           });
         },
 
@@ -184,9 +189,11 @@ router.get('/search', function(req, res, next) {
             json: true
           };
           request.get(options, function(error, response, albumData) {
+              if (!error && response.statusCode == 200) {
             console.log('Album Data:', albumData);
             //Adds albumData to parallel result
             paraCB(null, albumData);
+          }
           });
         }
         //Callback method for Parallel
@@ -198,15 +205,11 @@ router.get('/search', function(req, res, next) {
       });
     }
   ], function callback(err, result) {
-
-    //TEST FIREBASE PURPOSES --> REMOVE ON FURTHER DEVELOPMENT
-    //Save data in firebase
-    firebase.saveData(data);
-    firebase.getData();
-    //END_TEST
-
-    //Sends data to the client as an array of JSON Objects {trackData, artistData, albumData}
-    res.send(result);
+      if (!err) {
+        //Sends data to the client as an array of JSON Objects {trackData, artistData, albumData}
+        firebase.saveSearch(result[0]);
+          res.send(result);
+      }
   });
 });
 

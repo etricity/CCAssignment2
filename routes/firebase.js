@@ -10,53 +10,6 @@ admin.initializeApp({
 var db = admin.database();
 
 module.exports = {
-  //EN_TEST-- REMOVE ON FURTHER DEVELOPMENT
-  test: () => {console.log('test');},
-
-  saveData: function(data) {
-    var ref = db.ref("SPADE");
-    var usersRef = ref.child("users");
-
-
-    usersRef.set({
-      alanisawesome: {
-        date_of_birth: "June 23, 1912",
-        full_name: "Alan Turing"
-      }
-    }, function(err) {
-      if (err) {
-        console.log('Creation Error');
-      } else {
-        console.log('Data Created!');
-      }
-    });
-
-    var hopperRef = usersRef.child("gracehop");
-    usersRef.update({
-      "alanisawesome/nickname": "Alan The Machine"
-    }, function(err) {
-      if (err) {
-        console.log('Creation Error');
-      } else {
-        console.log('Data Updated!');
-      }
-    });
-  },
-  getData: function() {
-
-    var url = 'https://spade-274202.firebaseio.com/SPADE/users.json?';
-    url += querystring.stringify({
-      print: 'pretty'
-    });
-    var options = {
-      url: url,
-      json: true
-    };
-    request.get(options, function(error, response, data) {
-      console.log('Test Firebase Data: ', data);
-    });
-  },
-  //END_TEST
   logUser: function(userData) {
     /*
     IF user NOT in  DB
@@ -93,37 +46,28 @@ module.exports = {
 
   },
   saveSearch: function(searchResult) {
-    /*
-    IF Search NOT exists in DB
-      Save search data
-    ELSE
-      searchCounter++;
-    */
+    var searchRef = db.ref("searches");
 
-    /*Save last search of current user
-      user.lastSearch = latestSearch
-    */
+    searchRef.orderByKey().equalTo(searchResult.tracks.items[0].id).once("value", function(snapshot) {
+      console.log(snapshot.val());
+
+      if(snapshot.val() === null) {
+        console.log("New Search!");
+        searchRef.child(searchResult.tracks.items[0].id).set({
+          name: searchResult.tracks.items[0].name,
+          counter: 1
+        });
+      } else {
+        console.log('Search logged!');
+        var counterRef = db.ref("searches/" + searchResult.tracks.items[0].id + "/counter");
+        counterRef.transaction(function (current_value) {
+      return (current_value || 0) + 1;
+    });
+      }
+
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
 
   }
 };
-
-var usersRef = db.ref("users");
-
-usersRef.orderByKey().equalTo('new').once("value", function(snapshot) {
-  console.log(snapshot.val());
-
-}, function (errorObject) {
-  console.log("The read failed: " + errorObject.code);
-});
-
-
-
-// usersRef.child("alanisawesome").set({
-//   date_of_birth: "June 23, 1912",
-//   full_name: "Alan Turing"
-// });
-//
-// usersRef.child("aaracehop").set({
-//   date_of_birth: "December 9, 1906",
-//   full_name: "Grace Hopper"
-// });
