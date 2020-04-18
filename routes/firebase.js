@@ -57,13 +57,39 @@ module.exports = {
     });
   },
   //END_TEST
-  saveUser: function(userData) {
+  logUser: function(userData) {
     /*
     IF user NOT in  DB
       Save user data in DB
     ELSE
       loginCounter++;
     */
+
+    //Query Databse to see if a user matching their Spotify display_name already exists
+    var usersRef = db.ref("users");
+    usersRef.orderByKey().equalTo(userData.id).once("value", function(snapshot) {
+      console.log(snapshot.val());
+
+      //IF the user does not exist, create them
+      if(snapshot.val() === null) {
+        console.log('User does not exist in our database. Adding User...');
+        usersRef.child(userData.id).set({
+          display_name: userData.display_name,
+          email: userData.email,
+          country: userData.country,
+          //Will not be added to the DB. Here purely for user model reference
+          searchHist: null,
+          lastSearch: null,
+        });
+
+        //ELSE --> do noting
+      } else {
+        console.log('User Already Exists in our Database');
+      }
+      //error handling
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
 
   },
   saveSearch: function(searchResult) {
@@ -80,3 +106,24 @@ module.exports = {
 
   }
 };
+
+var usersRef = db.ref("users");
+
+usersRef.orderByKey().equalTo('new').once("value", function(snapshot) {
+  console.log(snapshot.val());
+
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
+
+
+// usersRef.child("alanisawesome").set({
+//   date_of_birth: "June 23, 1912",
+//   full_name: "Alan Turing"
+// });
+//
+// usersRef.child("aaracehop").set({
+//   date_of_birth: "December 9, 1906",
+//   full_name: "Grace Hopper"
+// });

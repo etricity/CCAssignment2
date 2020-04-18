@@ -82,6 +82,7 @@ router.get('/callback', function(req, res, next) {
         request.get(options, function(error, response, body) {
           //Log user data
           console.log('User Data: ', body);
+          firebase.logUser(body);
         });
 
         //Success --> redirected to main page
