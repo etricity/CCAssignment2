@@ -5,10 +5,23 @@
 * #191414
 * #1DB954
 */
+.header{background:red; display:block; color:#fff; padding:20px}
+.container{display:table; width:100%}
+.sideBar{background:blue; width:23%; color:#fff; padding:20px; display:table-cell; vertical-align:top;}
+.bodyContent{background:yellow; padding:20px; display:table-cell; vertical-align:top;}
+
+
+@media(max-width:760px){
+  .container,.sideBar,.bodyContent{display:block; width:100%; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; box-sizing:border-box}
+}
+
+
+
+
 
 body{
-  background-color: #1DB954;
-  margin-left: 160px;
+  background-color: purple;
+  /* margin-left: 160px; */
 }
 footer {
   background-color: #191414;
@@ -23,14 +36,14 @@ footer {
 
 nav{
   height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 160px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
+  /* width: 160px; Set the width of the sidebar */
+  /* position: fixed; Fixed Sidebar (stay in place on scroll) */
+  /* z-index: 1; Stay on top */
+  /* top: 0; Stay at the top */
+  /* left: 0; */
   background-color: #111; /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 #title{
 
@@ -74,8 +87,8 @@ nav .full-content:hover{
 }
 nav .bottom-content{
   position: fixed;
-  left: 0;
-  bottom: 0;
+  /* left: 0;
+  bottom: 0; */
   background-color: #1DB954;
   border-radius: 3em;
   margin:1em;
@@ -139,6 +152,33 @@ nav .bottom-content{
   visibility: hidden;
 
 }
+#album-div{
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin:1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+  visibility: hidden;
+  color: #1DB954;
+
+}
+
+#artist-div{
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin:1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+  visibility: hidden;
+  color: #1DB954;
+
+}
+
+
+
+
 
 #song-Table tr{
   color: #1DB954;
