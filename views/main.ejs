@@ -56,6 +56,29 @@
   <div class="bodyContent">
 
     <body>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAJ0u31bG_VKckUgdaRf16Hk20vWB4Kl2M",
+    authDomain: "spade-274202.firebaseapp.com",
+    databaseURL: "https://spade-274202.firebaseio.com",
+    projectId: "spade-274202",
+    storageBucket: "spade-274202.appspot.com",
+    messagingSenderId: "892475686277",
+    appId: "1:892475686277:web:a7c1c70a90863a2add98ec",
+    measurementId: "G-WCF83GY6G1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 
 
 
@@ -132,7 +155,7 @@
               <td>Followers</td>
               <td id='followers'></td>
             </tr>
-           
+
           </table>
 
         </div>
@@ -230,7 +253,8 @@
 
       //This is were you should populate the HTML with info
       function success(data) {
-        console.log(data);
+        console.log('DATA: ', data);
+        firebase.analytics().logEvent('search');
         paintSongData(data[0]);
         paintArtistData(data[1]);
         paintAlbumData(data[2]);
