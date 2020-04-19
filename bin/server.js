@@ -2,8 +2,10 @@
 
 // Module dependencies --> Imports
 var app = require('../app');
+const PORT = 8080;
 
 //Test purposes
-app.listen(8080, function() {
-  console.log('Test server listening on port 8080!')
+app.listen(PORT, function() {
+  console.log('Test server listening on port ' + PORT + '!')
+
 })
