@@ -9,9 +9,10 @@
   <title></title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<div class="header">  <div id='title'>
-        <h1 id='greeting'></h1>
-      </div>
+<div class="header">
+  <div id='title'>
+    <h1 id='greeting'></h1>
+  </div>
 
 </div>
 <div class="container">
@@ -87,7 +88,7 @@
               <td id='album'></td>
             </tr>
             <tr>
-              <td>Relative Popularity Rating</td>
+              <td>Popularity Rating</td>
               <td id='popularity'></td>
             </tr>
           </table>
@@ -98,6 +99,7 @@
 
 
         <div id='album-div'>
+          <div id='album-image'><img src=""></div>
           <table id='album-Table'>
             <tr>
               <td>Album Name </td>
@@ -119,6 +121,8 @@
         </div>
 
         <div id='artist-div'>
+          <div id='artist-image'><img src=""></div>
+          <div id='follow-link'><a href="">Follow</a></div>
           <table id='artist-Table'>
             <tr>
               <td>Artist Name </td>
@@ -128,20 +132,11 @@
               <td>Followers</td>
               <td id='followers'></td>
             </tr>
+           
           </table>
+
         </div>
-
-
-
-
       </div>
-
-
-
-
-
-
-
 
     </body>
 
@@ -246,19 +241,24 @@
     });
   });
   function paintSongData(data) {
-    document.getElementById("song-data").innerText = 'This song was created by ' + data.tracks.items[0].artists[0].name;
     document.getElementById("result-name").innerText = data.tracks.items[0].name;
     document.getElementById("artist").innerText = data.tracks.items[0].artists[0].name;
     document.getElementById("album").innerText = data.tracks.items[0].album.name;
     document.getElementById("popularity").innerText = data.tracks.items[0].popularity;
     document.getElementById("song-div").style.visibility = "visible";
   }
+
   function paintArtistData(data) {
+    document.getElementById("artist-image").innerHTML = '<img src="' + data.artists.items[0].images[0].url + '" alt= "" style="width:10em;"  > ';
     document.getElementById("artist-name").innerText = data.artists.items[0].name;
     document.getElementById("followers").innerText = data.artists.items[0].followers.total;
+    document.getElementById("follow-link").innerHTML = '<a href="' + data.artists.items[0].external_urls.spotify + '">Follow</a>';
     document.getElementById("artist-div").style.visibility = "visible";
   }
   function paintAlbumData(data) {
+
+    document.getElementById("album-image").innerHTML = '<img src="' + data.albums.items[0].images[0].url + '" alt= "" style="width:10em;"  > ';
+
     document.getElementById("album-name").innerText = data.albums.items[0].name;
     document.getElementById("release-date").innerText = data.albums.items[0].release_date;
     document.getElementById("album-type").innerText = data.albums.items[0].album_type;

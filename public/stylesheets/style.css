@@ -1,26 +1,41 @@
-
-
 /**
 * Spotify Colors: https://usbrandcolors.com/spotify-colors/
 * #191414
 * #1DB954
 */
-.header{background:red; display:block; color:#fff; padding:20px}
-.container{display:table; width:100%}
-.sideBar{background:blue; width:23%; color:#fff; padding:20px; display:table-cell; vertical-align:top;}
-.bodyContent{background:yellow; padding:20px; display:table-cell; vertical-align:top;}
-
-
-@media(max-width:760px){
-  .container,.sideBar,.bodyContent{display:block; width:100%; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; box-sizing:border-box}
+.header {
+  /* background: red; */
+  display: block;
+  color: #fff;
+  padding: 20px;
+}
+.container {
+  display: table;
+  width: 100%;
+}
+.sideBar {
+  /* background: blue; */
+  width: 20%;
+  height: auto;
+  color: #fff;
+  padding: 20px;
+  display: table-cell;
+  vertical-align: top;
+  left: 0;
+  z-index: 1;
+}
+.bodyContent {
+  /* background: yellow; */
+  padding: 20px;
+  display: table-cell;
+  vertical-align: top;
+  border-left: double #1db954;
 }
 
+/* PERMANENT STYLES  */
 
-
-
-
-body{
-  /* background-color: purple; */
+body {
+  background-color: black;
   /* margin-left: 160px; */
 }
 footer {
@@ -30,11 +45,30 @@ footer {
   bottom: 0;
   width: 100%;
   padding: 1em;
- color: #1DB954;
+  color: #1db954;
   text-align: center;
 }
 
-nav{
+#login {
+  background-color: #1db954;
+  text-align: center;
+  padding: 2em;
+  margin: 0 auto;
+  border-radius: 1em;
+  border-style: double;
+  border-color: #191414;
+  width: 70%;
+}
+#login a {
+  background-color: #191414;
+  color: #1db954;
+  padding: 1em;
+  border-radius: 1em;
+}
+
+/* DYNAMIC STYLES */
+
+nav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   /* width: 160px; Set the width of the sidebar */
   /* position: fixed; Fixed Sidebar (stay in place on scroll) */
@@ -44,76 +78,83 @@ nav{
   background-color: #111; /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
   /* padding-top: 20px; */
+  border-style: double;
+  border-color: #1db954;
 }
-#title{
 
-  background-color: #1DB954;
+.link-content {
+  margin-top: 1em;
+  background-color: #1db954;
+  border-radius: 0.5em;
+  text-align: center;
+  margin: 1em;
+  padding: 1em;
+}
+
+#title {
+  background-color: #1db954;
   padding: 2em;
   border-radius: 0.5em;
-
+  border-style: double;
+  border-color: #191414;
 }
-#title h1{
+
+#title h1 {
   color: #191414;
   text-decoration: underline;
   text-align: center;
-
 }
-.full-content{
+
+#artist-image {
+  text-align: center;
+  padding: 1em;
+}
+#album-image {
+  text-align: center;
+  padding: 1em;
+}
+.full-content {
   background-color: #191414;
   border-radius: 3em;
   text-align: center;
-  margin:1em;
+  margin: 1em;
   size: 3em;
   padding: 2em;
-  color:#1DB954 ;
+  color: #1db954;
   /* display: inline-block; */
 }
-nav .full-content:hover{
-  color:#191414 ;
-  background-color: #1DB954;
-
-
-
+nav .full-content:hover {
+  color: #191414;
+  background-color: #1db954;
 }
 
-
-.full-content #songQuery{
+.full-content #songQuery {
   /* size: 10em; */
-  background-color: #1DB954;
+  background-color: #1db954;
   color: white;
   font-size: 2em;
   margin-bottom: 10px;
-
 }
-nav .bottom-content{
+nav .bottom-content {
   position: fixed;
   /* left: 0;
   bottom: 0; */
-  background-color: #1DB954;
+  background-color: #1db954;
   border-radius: 3em;
-  margin:1em;
+  margin: 1em;
   size: 2em;
   padding: 1em;
 }
 
-#webplayer{
-  background-color: #1DB954;
+#readIn {
+  background-color: #1db954;
   border-radius: 0.5em;
   text-align: center;
-  margin:1em;
-
-}
-
-#readIn{
-  background-color: #1DB954;
-  border-radius: 0.5em;
-  text-align: center;
-  margin:1em;
-
+  margin: 1em;
 }
 .column {
   float: left;
-  width: 30%;
+  width: 20%;
 }
 
 .row {
@@ -127,73 +168,112 @@ nav .bottom-content{
   clear: both;
 }
 
-#table-div{
+#table-div {
   background-color: #191414;
   border-radius: 0.5em;
-  margin:1em;
+  margin: 1em;
   align-content: center;
   display: inline-block;
   padding: 1em;
 }
 
-#user-Table tr{
- color: #1DB954;
+#user-Table  {
+  color: #1db954;
   border-radius: 0.5em;
-
-}
-
-#song-div{
-  background-color: #191414;
-  border-radius: 0.5em;
-  margin:1em;
   align-content: center;
-  display: inline-block;
-  padding: 1em;
-  visibility: hidden;
-
 }
-#album-div{
+#user-Table tr {
+  color: #1db954;
+  border-radius: 0.5em;
+}
+
+#song-div {
   background-color: #191414;
   border-radius: 0.5em;
-  margin:1em;
+  margin: 1em;
   align-content: center;
   display: inline-block;
   padding: 1em;
   visibility: hidden;
-  color: #1DB954;
-
+  width: auto;
 }
-
-#artist-div{
+#album-div {
   background-color: #191414;
   border-radius: 0.5em;
-  margin:1em;
+  margin: 1em;
   align-content: center;
   display: inline-block;
   padding: 1em;
   visibility: hidden;
-  color: #1DB954;
-
+  color: #1db954;
+  width: auto;
 }
 
-
-
-
-
-#song-Table tr{
-  color: #1DB954;
-   border-radius: 0.5em;
+#artist-div {
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin: 1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+  visibility: hidden;
+  color: #1db954;
+  width: auto;
 }
 
+#song-Table tr {
+  color: #1db954;
+  border-radius: 0.5em;
+}
 
+img { 
+  max-width:100%; 
+          height:auto; 
+} 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
-@media screen and (max-width: 600px) {
-  .column {
+
+#center{
+  height: 20%;
+}
+
+#follow-link{
+  align-content: center;
+  text-align: center;
+  background-color: #1db954;
+  border-radius: 1em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+#follow-link a{
+  align-content: center;
+}
+@media (max-width: 760px) {
+  .container,
+  .sideBar,
+  .bodyContent {
+    display: block;
     width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .bodyContent{
+    border-left: none;
+    border-top: double #1db954;
+    margin-bottom: 3em;
+
+  }
+  nav {
+    border-bottom: double #1db954;
+  }
+  .column {
+    width: auto;
   }
   /* .row {
       margin: 4em;
       border: white;
       border-radius: 1em;
   } */
+
 }
