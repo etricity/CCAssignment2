@@ -4,7 +4,6 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var hbs = require('express-handlebars');
 var cors = require('cors');
 var querystring = require('querystring');
 
@@ -18,13 +17,8 @@ var app = express();
 
 
 // view engine setup
-app.engine('hbs', hbs({
-  extname: 'hbs',
-  defaultLayout: 'layout',
-  layoutsDir: __dirname + '/views/layouts/'
-}));
-app.set('views', path.join(__dirname, 'views/partials'));
-app.set('view engine', 'hbs');
+app.use(express.static('public'));
+app.set('view engine', 'ejs')
 
 //Middleware --> Runs before any request get/post
 app.use(logger('dev'));
@@ -68,7 +62,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: err
   });
 });
 

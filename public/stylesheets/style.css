@@ -20,7 +20,7 @@
 
 
 body{
-  background-color: purple;
+  /* background-color: purple; */
   /* margin-left: 160px; */
 }
 footer {
@@ -192,11 +192,8 @@ nav .bottom-content{
     width: 100%;
   }
   /* .row {
-      margin: 4em; 
+      margin: 4em;
       border: white;
       border-radius: 1em;
   } */
 }
-
-
-
