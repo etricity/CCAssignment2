@@ -56,7 +56,14 @@
   <div class="bodyContent">
 
     <body>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script type="text/javascript" src="/js/analyticsConfig.js"></script>
 
 
 
@@ -132,7 +139,7 @@
               <td>Followers</td>
               <td id='followers'></td>
             </tr>
-           
+
           </table>
 
         </div>
@@ -230,7 +237,8 @@
 
       //This is were you should populate the HTML with info
       function success(data) {
-        console.log(data);
+        console.log('DATA: ', data);
+        firebase.analytics().logEvent('search', { searchTerms:document.getElementById("song-name").value});
         paintSongData(data[0]);
         paintArtistData(data[1]);
         paintAlbumData(data[2]);
