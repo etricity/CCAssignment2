@@ -177,7 +177,7 @@ nav .bottom-content {
   padding: 1em;
 }
 
-#user-Table  {
+#user-Table {
   color: #1db954;
   border-radius: 0.5em;
   align-content: center;
@@ -226,17 +226,17 @@ nav .bottom-content {
   border-radius: 0.5em;
 }
 
-img { 
-  max-width:100%; 
-          height:auto; 
-} 
+img {
+  max-width: 100%;
+  height: auto;
+}
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 
-#center{
+#center {
   height: 20%;
 }
 
-#follow-link{
+#follow-link {
   align-content: center;
   text-align: center;
   background-color: #1db954;
@@ -245,8 +245,17 @@ img {
   margin-bottom: 1em;
 }
 
-#follow-link a{
+#follow-link a {
   align-content: center;
+}
+#follow-link a:visited {
+  color: #191414;
+}
+
+#webplayer-page{
+  background-color: white;
+
+
 }
 @media (max-width: 760px) {
   .container,
@@ -258,11 +267,10 @@ img {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
-  .bodyContent{
+  .bodyContent {
     border-left: none;
     border-top: double #1db954;
     margin-bottom: 3em;
-
   }
   nav {
     border-bottom: double #1db954;
@@ -275,5 +283,4 @@ img {
       border: white;
       border-radius: 1em;
   } */
-
 }
