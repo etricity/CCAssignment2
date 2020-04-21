@@ -266,6 +266,7 @@ router.get('/addTrackToPlaylist', function(req, res, next) {
                       if (!error && response.statusCode == 201) {
                         playlistID = response.body.id;
                         console.log('Created New Playlist');
+                        addTrack(req, playlistID);
                 } else {
                   console.log('Statuscode: ', response.statusCode, 'Error: ', error);
                 }
@@ -273,41 +274,42 @@ router.get('/addTrackToPlaylist', function(req, res, next) {
 
             } else {
               console.log('SPADE Playlist detected!');
+              addTrack(req, playlistID);
             }
 
             //Adding song to playlist
 
 
 
-              var url = 'https://api.spotify.com/v1/playlists/'+ playlistID + '/tracks?';
-
-              url += querystring.stringify({
-                uris: req.query.trackURI
-              });
-
-
-              //Use token to access Spotify API
-              var options = {
-                url: url,
-                body: {
-              name: req.query.name,
-              description: req.query.description,
-              public: false
-            },
-                headers: {
-                  'Authorization': 'Bearer ' + req.query.access_token,
-                  'Accept': 'application/json'
-                },
-                json: true
-              };
-              request.post(options, function(error, response, trackData) {
-                    if (!error && response.statusCode == 201) {
-                      console.log('song added');
-              } else {
-                console.log('error: ', response.statusCode);
-                console.log(url);
-              }
-              });
+            //   var url = 'https://api.spotify.com/v1/playlists/'+ playlistID + '/tracks?';
+            //
+            //   url += querystring.stringify({
+            //     uris: req.query.trackURI
+            //   });
+            //
+            //
+            //   //Use token to access Spotify API
+            //   var options = {
+            //     url: url,
+            //     body: {
+            //   name: req.query.name,
+            //   description: req.query.description,
+            //   public: false
+            // },
+            //     headers: {
+            //       'Authorization': 'Bearer ' + req.query.access_token,
+            //       'Accept': 'application/json'
+            //     },
+            //     json: true
+            //   };
+            //   request.post(options, function(error, response, trackData) {
+            //         if (!error && response.statusCode == 201) {
+            //           console.log('song added');
+            //   } else {
+            //     console.log('error: ', response.statusCode);
+            //     console.log(url);
+            //   }
+            //   });
 
             res.send();
           }
@@ -341,7 +343,37 @@ router.get('/addTrackToPlaylist', function(req, res, next) {
   res.end();
 });
 
+function addTrack(req, playlistID) {
+  var url = 'https://api.spotify.com/v1/playlists/'+ playlistID + '/tracks?';
 
+  url += querystring.stringify({
+    uris: req.query.trackURI
+  });
+
+
+  //Use token to access Spotify API
+  var options = {
+    url: url,
+    body: {
+  name: req.query.name,
+  description: req.query.description,
+  public: false
+},
+    headers: {
+      'Authorization': 'Bearer ' + req.query.access_token,
+      'Accept': 'application/json'
+    },
+    json: true
+  };
+  request.post(options, function(error, response, trackData) {
+        if (!error && response.statusCode == 201) {
+          console.log('song added');
+  } else {
+    console.log('error: ', response.statusCode);
+    console.log(url);
+  }
+  });
+}
 
 
 
