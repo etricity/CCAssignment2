@@ -56,13 +56,14 @@
   <div class="bodyContent">
 
     <body>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 
-<!--Core Firebase JS SDK (must be listed first) -->
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
-<!--Adding Google analytics product -->
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
-<!--Adding Google Analytics config specify to this project -->
-<script type="text/javascript" src="/js/analyticsConfig.js"></script>
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+      <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+      <script type="text/javascript" src="/js/analyticsConfig.js"></script>
 
 
 
@@ -98,6 +99,9 @@
               <td id='popularity'></td>
             </tr>
           </table>
+          <div id="song-found">
+          </div>
+
         </div>
 
 
@@ -237,7 +241,7 @@
       //This is were you should populate the HTML with info
       function success(data) {
         console.log('DATA: ', data);
-        firebase.analytics().logEvent('search', { searchTerms:document.getElementById("song-name").value});
+        firebase.analytics().logEvent('search', { searchTerms: document.getElementById("song-name").value });
         paintSongData(data[0]);
         paintArtistData(data[1]);
         paintAlbumData(data[2]);
@@ -248,12 +252,34 @@
     });
   });
   function paintSongData(data) {
+
     document.getElementById("result-name").innerText = data.tracks.items[0].name;
     document.getElementById("artist").innerText = data.tracks.items[0].artists[0].name;
     document.getElementById("album").innerText = data.tracks.items[0].album.name;
     document.getElementById("popularity").innerText = data.tracks.items[0].popularity;
     document.getElementById("song-div").style.visibility = "visible";
+
+    var video_url = data.tracks.items[0].preview_url;
+    var vid = document.getElementById("preview-url");
+    console.log(video_url);
+
+    if (video_url == null) {
+      // vid.style.display = "none";
+      document.getElementById("song-found").innerHTML = '"<div id="song-link"><a href="' + data.tracks.items[0].external_urls.spotify + '">Song</a></div>';
+    }
+    else {
+      if (document.getElementById("preview-url")) {
+        document.getElementById("preview-url").pause();
+        document.getElementById("preview-url").display = "visible";
+      }
+
+      document.getElementById("song-found").innerHTML = '<audio id="preview-url" controls="" name="media"> <source src="' + video_url + '" type="audio/mpeg" > </audio>';
+      document.getElementById("preview-url").load();
+      document.getElementById("preview-url").style.display = "inline";
+    }
+
   }
+  
 
   function paintArtistData(data) {
     document.getElementById("artist-image").innerHTML = '<img src="' + data.artists.items[0].images[0].url + '" alt= "" style="width:10em;"  > ';

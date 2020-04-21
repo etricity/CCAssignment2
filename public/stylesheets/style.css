@@ -65,6 +65,15 @@ footer {
   padding: 1em;
   border-radius: 1em;
 }
+#song-link {
+  align-content: center;
+  text-align: center;
+  background-color: #1db954;
+  border-radius: 1em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  /* display: none; */
+}
 
 /* DYNAMIC STYLES */
 
