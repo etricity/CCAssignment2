@@ -57,6 +57,13 @@
 
     <body>
 
+<!--Core Firebase JS SDK (must be listed first) -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<!--Adding Google analytics product -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+<!--Adding Google Analytics config specify to this project -->
+<script type="text/javascript" src="/js/analyticsConfig.js"></script>
+
 
 
       <div class="full-content">
@@ -91,7 +98,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
 //JESS ADDING CODE
-</script> 
+</script>
 
 
 <script>
@@ -106,9 +113,6 @@
   //Variable to acccess the player outside of the intialisation
   var p;
 
-
-
-//JESS ADDING CODE LOL
 
   window.onload = () => {
 
@@ -156,26 +160,37 @@
       message
     }) => {
       console.error(message);
+      firebase.analytics().logEvent('initialization_error');
     });
     player.addListener('authentication_error', ({
       message
     }) => {
       console.error(message);
+      firebase.analytics().logEvent('authentication_error');
     });
     player.addListener('account_error', ({
       message
     }) => {
       console.error(message);
+      firebase.analytics().logEvent('account_error');
     });
     player.addListener('playback_error', ({
       message
     }) => {
       console.error(message);
+      firebase.analytics().logEvent('playback_error');
     });
 
     // Playback status updates
     player.addListener('player_state_changed', state => {
       console.log('Player state changed. State: ', state)
+
+      var message = 'playing';
+      if(state.paused) {
+        message = 'paused';
+      }
+      console.log(message);
+      firebase.analytics().logEvent('webplayer_state_change', {state: message});
     });
 
     //
@@ -184,6 +199,7 @@
     }) => {
       console.log('Ready with Device ID: ', device_id);
       document.getElementById("status").innerText = 'Ready to play!'
+      firebase.analytics().logEvent('player ready');
 
     });
 
