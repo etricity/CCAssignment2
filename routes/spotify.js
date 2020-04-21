@@ -22,7 +22,7 @@ var stateKey = 'spotify_auth_state';
 //Spotify Authentication Login & Redirect to main page (router.get'/spotify')
 router.get('/login', function(req, res, next) {
   var state = generateRandomString(16);
-  var scope = 'user-read-private user-read-email playlist-read-private streaming';
+  var scope = 'user-read-private user-read-email playlist-read-private streaming playlist-modify-public playlist-modify-private playlist-read-collaborative';
   res.cookie(stateKey, state);
 
   res.redirect('https://accounts.spotify.com/authorize?' +
@@ -212,6 +212,138 @@ router.get('/search', function(req, res, next) {
       }
   });
 });
+
+
+
+
+router.get('/addTrackToPlaylist', function(req, res, next) {
+  console.log('work');
+  var playlistID;
+
+  //Check if spade playlist exists
+
+    var url = 'https://api.spotify.com/v1/users/' + req.query.userID +'/playlists';
+
+    //Use token to access Spotify API
+    var options = {
+      url: url,
+      headers: {
+        'Authorization': 'Bearer ' + req.query.access_token,
+      },
+      json: true
+    };
+    request.get(options, function(error, response, playlists) {
+          if (!error && response.statusCode == 200) {
+            var createPlaylist = true;
+
+            for(var i = 0; i < playlists.items.length; i++) {
+              console.log(playlists.items[i].name);
+              if(playlists.items[i].name == 'SPADE')
+              {
+                playlistID = playlists.items[i].id;
+                createPlaylist = false;
+              }
+            }
+
+            if(createPlaylist) {
+
+                var url = 'https://api.spotify.com/v1/users/'+ req.query.userID + '/playlists';
+
+                //Use token to access Spotify API
+                var options = {
+                  url: url,
+                  body: {
+                name: req.query.name,
+                description: req.query.description,
+                public: false
+              },
+                  headers: {
+                    'Authorization': 'Bearer ' + req.query.access_token
+                  },
+                  json: true
+                };
+                request.post(options, function(error, response, trackData) {
+                      if (!error && response.statusCode == 201) {
+                        playlistID = response.body.id;
+                        console.log('Created New Playlist');
+                } else {
+                  console.log('Statuscode: ', response.statusCode, 'Error: ', error);
+                }
+                });
+
+            } else {
+              console.log('SPADE Playlist detected!');
+            }
+
+            //Adding song to playlist
+
+
+
+              var url = 'https://api.spotify.com/v1/playlists/'+ playlistID + '/tracks?';
+
+              url += querystring.stringify({
+                uris: req.query.trackURI
+              });
+
+
+              //Use token to access Spotify API
+              var options = {
+                url: url,
+                body: {
+              name: req.query.name,
+              description: req.query.description,
+              public: false
+            },
+                headers: {
+                  'Authorization': 'Bearer ' + req.query.access_token,
+                  'Accept': 'application/json'
+                },
+                json: true
+              };
+              request.post(options, function(error, response, trackData) {
+                    if (!error && response.statusCode == 201) {
+                      console.log('song added');
+              } else {
+                console.log('error: ', response.statusCode);
+                console.log(url);
+              }
+              });
+
+            res.send();
+          }
+            else {
+              console.log('Status: ' + response.statusCode + '. Error: ' + error);
+            }
+    });
+
+
+
+//   var url = 'https://api.spotify.com/v1/users/'+ req.query.userID + '/playlists';
+//
+//   //Use token to access Spotify API
+//   var options = {
+//     url: url,
+//     body: {
+//   name: req.query.name,
+//   description: req.query.description,
+//   public: false
+// },
+//     headers: {
+//       'Authorization': 'Bearer ' + req.query.access_token
+//     },
+//     json: true
+//   };
+//   request.post(options, function(error, response, trackData) {
+//         if (!error && response.statusCode == 200) {
+//   }
+//   });
+
+  res.end();
+});
+
+
+
+
 
 //Webplayer API
 router.get('/webplayer', function(req, res, next) {
