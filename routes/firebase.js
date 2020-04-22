@@ -92,7 +92,7 @@ module.exports = {
       userSeachHist.push().set({
         searchID: searchResult.tracks.items[0].id,
         songname: searchResult.tracks.items[0].name
-});
+      });
       //Update user's last search
       currentUserRef.update({
         lastSearch: searchResult.tracks.items[0].id
@@ -102,13 +102,13 @@ module.exports = {
       console.log("The read failed: " + errorObject.code);
     });
   },
-  saveTrack: function(trackData){
+  saveTrack: function(trackData) {
     var userSavedTracks = currentUserRef.child('savedTracks');
     console.log(trackData.trackID);
     userSavedTracks.push().set({
       trackID: trackData.trackID,
       trackName: trackData.trackName
-});
+    });
 
   }
 };

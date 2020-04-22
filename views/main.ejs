@@ -192,7 +192,6 @@ var currentTrack;
       },
       success: function (response) {
         userData = response;
-        console.log(response);
         paintPage(response);
       }
     });
@@ -228,10 +227,8 @@ var currentTrack;
 
     $('#addToPlaylist').on('click', function (ev) {
       //Stop default post call
-      if(currentTrack) {
-
       ev.preventDefault();
-      console.log('click');
+      if(currentTrack) {
       addTrackToPlaylist();
       firebase.analytics().logEvent('addTrackToPlaylist', { searchTerms:document.getElementById("song-name").value});
 }
@@ -286,7 +283,6 @@ var currentTrack;
 
 
     currentTrack = data[0].tracks.items[0];
-    console.log('DATA: ', data);
     firebase.analytics().logEvent('search', { searchTerms:document.getElementById("song-name").value});
     paintSongData(data[0]);
     paintArtistData(data[1]);
@@ -307,7 +303,6 @@ var currentTrack;
 
     var video_url = data.tracks.items[0].preview_url;
     var vid = document.getElementById("preview-url");
-    console.log(video_url);
 
     if (video_url == null) {
       // vid.style.display = "none";
