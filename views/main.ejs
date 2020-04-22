@@ -74,6 +74,7 @@
           <button type=submit> Search</button>
           <p id='song-data'></p>
         </form>
+        <button id = 'addToPlaylist'> Add track to my library</button>
 
       </div>
 
@@ -164,8 +165,8 @@
 
 <script>
 
-
-
+var userData;
+var currentTrack;
   var params = getHashParams();
   var access_token = params.access_token,
     refresh_token = params.refresh_token;
@@ -190,6 +191,7 @@
         'Authorization': 'Bearer ' + access_token
       },
       success: function (response) {
+        userData = response;
         console.log(response);
         paintPage(response);
       }
@@ -220,37 +222,78 @@
       //Stop default post call
       ev.preventDefault();
 
-      //Variable for API call data
-      var data;
+      //API call to Spoify for user data
+      getUserData();
+    });
 
-      //Request to server
-      //Client --> Server --> Spotify --> Server --> Client
+    $('#addToPlaylist').on('click', function (ev) {
+      //Stop default post call
+      ev.preventDefault();
+      console.log('click');
+       addTrackToPlaylist();
+
+    });
+
+  });
+
+  function addTrackToPlaylist() {
+    //Request to server
+    //Client-->Spotify
+    if(currentTrack) {
       $.ajax({
-        url: '/spotify/search',
+        url: '/spotify/addTrackToPlaylist',
         headers: {
           'Authorization': 'Bearer ' + access_token
         },
         data: {
-          song_name: document.getElementById("song-name").value,
+          name: 'SPADE',
+          description: 'Songs added via SPADE',
+          userID: userData.id,
+          trackURI: currentTrack.uri,
           access_token: access_token
-        },
-        success: success,
-        error: error
+        }
       });
+    }
+  }
 
-      //This is were you should populate the HTML with info
-      function success(data) {
-        console.log('DATA: ', data);
-        firebase.analytics().logEvent('search', { searchTerms: document.getElementById("song-name").value });
-        paintSongData(data[0]);
-        paintArtistData(data[1]);
-        paintAlbumData(data[2]);
-      }
-      function error(error) {
-      }
 
-    });
+  function getUserData() {
+    //Variable for API call data
+  var data;
+
+  //Request to server
+  //Client --> Server --> Spotify --> Server --> Client
+  $.ajax({
+    url: '/spotify/search',
+    headers: {
+      'Authorization': 'Bearer ' + access_token
+    },
+    data: {
+      song_name: document.getElementById("song-name").value,
+      access_token: access_token
+    },
+    success: success,
+    error: error
   });
+}
+
+  //This is were you should populate the HTML with info
+  function success(data) {
+    if(data) {
+
+
+    currentTrack = data[0].tracks.items[0];
+    console.log('DATA: ', data);
+    firebase.analytics().logEvent('search', { searchTerms:document.getElementById("song-name").value});
+    paintSongData(data[0]);
+    paintArtistData(data[1]);
+    paintAlbumData(data[2]);
+  }
+  }
+  function error(error) {
+    console.error(error);
+  }
+
   function paintSongData(data) {
 
     document.getElementById("result-name").innerText = data.tracks.items[0].name;
@@ -280,6 +323,7 @@
 
   }
   
+
 
   function paintArtistData(data) {
     document.getElementById("artist-image").innerHTML = '<img src="' + data.artists.items[0].images[0].url + '" alt= "" style="width:10em;"  > ';

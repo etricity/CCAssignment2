@@ -15,14 +15,14 @@ var redirect_uri = 'https://spade-274202.ts.r.appspot.com/spotify/callback';
 var stateKey = 'spotify_auth_state';
 
 //Comment out line below for GCP : Uncomment line to test locally (localhost 8080)
- redirect_uri = 'http://localhost:8080/spotify/callback';
+redirect_uri = 'http://localhost:8080/spotify/callback';
 
 
 
 //Spotify Authentication Login & Redirect to main page (router.get'/spotify')
 router.get('/login', function(req, res, next) {
   var state = generateRandomString(16);
-  var scope = 'user-read-private user-read-email playlist-read-private streaming';
+  var scope = 'user-read-private user-read-email playlist-read-private streaming playlist-modify-public playlist-modify-private playlist-read-collaborative';
   res.cookie(stateKey, state);
 
   res.redirect('https://accounts.spotify.com/authorize?' +
@@ -106,8 +106,9 @@ router.get('/', function(req, res, next) {
   res.render('main');
 });
 
+//Searches for a song on Spotify given the user's search terms
 router.get('/search', function(req, res, next) {
-
+  var acceptData = false;
   var data = [];
 
   //Waterfall runs array of functions asynchronously
@@ -131,18 +132,22 @@ router.get('/search', function(req, res, next) {
         json: true
       };
       request.get(options, function(error, response, trackData) {
-            if (!error && response.statusCode == 200) {
-        console.log('Track Data:', trackData);
-        data.push(trackData);
-        //Passes trackData to W2
-        callback(null, trackData);
-      }
+        if (!error && response.statusCode == 200) {
+          console.log('Track Data:', trackData);
+          data.push(trackData);
+          //Passes trackData to W2
+          callback(null, trackData);
+        }
       });
 
       //Get artist & album data
       //W2
     },
     function(trackData, callback) {
+
+       if(trackData.tracks.items.length > 0) {
+
+
 
       //Parallel runs array of functions synchronously
       async.parallel([
@@ -164,11 +169,11 @@ router.get('/search', function(req, res, next) {
             json: true
           };
           request.get(options, function(error, response, artistData) {
-              if (!error && response.statusCode == 200) {
-            console.log('Artist Data:', artistData);
-            //Adds artistData to parallel result
-            paraCB(null, artistData);
-          }
+            if (!error && response.statusCode == 200) {
+              console.log('Artist Data:', artistData);
+              //Adds artistData to parallel result
+              paraCB(null, artistData);
+            }
           });
         },
 
@@ -189,11 +194,11 @@ router.get('/search', function(req, res, next) {
             json: true
           };
           request.get(options, function(error, response, albumData) {
-              if (!error && response.statusCode == 200) {
-            console.log('Album Data:', albumData);
-            //Adds albumData to parallel result
-            paraCB(null, albumData);
-          }
+            if (!error && response.statusCode == 200) {
+              console.log('Album Data:', albumData);
+              //Adds albumData to parallel result
+              paraCB(null, albumData);
+            }
           });
         }
         //Callback method for Parallel
@@ -201,15 +206,90 @@ router.get('/search', function(req, res, next) {
         //Fuses W1 & W2 data together
         data.push.apply(data, results);
         //Passes data to Waterfall callback
+        acceptData = true;
         callback(null, data);
       });
+    } else {
+      callback(null, data);
+    }
     }
   ], function callback(err, result) {
-      if (!err) {
-        //Sends data to the client as an array of JSON Objects {trackData, artistData, albumData}
-        firebase.saveSearch(result[0]);
-          res.send(result);
+    if (!err && acceptData) {
+      //Sends data to the client as an array of JSON Objects {trackData, artistData, albumData}
+      firebase.saveSearch(result[0]);
+      res.send(result);
+    } else {
+      res.end();
+    }
+  });
+});
+
+/*
+@desciption: Adds the searced song to a SPADE Playlist on the user's Spotify account.
+Queries user's Spotify Account to see if a SPADE Playlist exists.
+If one exists, it adds the song, if not it creates one, then add the song.
+ */
+router.get('/addTrackToPlaylist', function(req, res, next) {
+  var playlistID;
+
+  //Request all user's existing playlists
+  var url = 'https://api.spotify.com/v1/users/' + req.query.userID + '/playlists';
+  var options = {
+    url: url,
+    headers: {
+      'Authorization': 'Bearer ' + req.query.access_token,
+    },
+    json: true
+  };
+  request.get(options, function(error, response, playlists) {
+    if (!error && response.statusCode == 200) {
+      var createPlaylist = true;
+
+      //Check to see if a 'SPADE' playlist exists
+      for (var i = 0; i < playlists.items.length; i++) {
+        console.log(playlists.items[i].name);
+        if (playlists.items[i].name == 'SPADE') {
+          playlistID = playlists.items[i].id;
+          createPlaylist = false;
+        }
       }
+
+      //IF SPADE Playlist doesn't exists --> create it
+      if (createPlaylist) {
+        var url = 'https://api.spotify.com/v1/users/' + req.query.userID + '/playlists';
+        var options = {
+          url: url,
+          body: {
+            name: req.query.name,
+            description: req.query.description,
+            public: false
+          },
+          headers: {
+            'Authorization': 'Bearer ' + req.query.access_token
+          },
+          json: true
+        };
+        //Request to create new playlist
+        request.post(options, function(error, response, trackData) {
+          if (!error && response.statusCode == 201) {
+            playlistID = response.body.id;
+            console.log('Created New Playlist');
+            addTrack(req, playlistID);
+          } else {
+            console.log('Statuscode: ', response.statusCode, 'Error: ', error);
+          }
+        });
+
+        //ELSE --> playlist already exists
+      } else {
+        console.log('SPADE Playlist detected!');
+        //Add the track to the playlist
+        addTrack(req, playlistID);
+      }
+      //ELSE statement for the inital request (get all playlists)
+    } else {
+      console.log('Status: ' + response.statusCode + '. Error: ' + error);
+    }
   });
 });
 
@@ -221,6 +301,40 @@ router.get('/webplayer', function(req, res, next) {
 
 //Utility methods
 
+/*
+@param req: contains the data send from the client to the server to make request to the Spotify API
+@param playlistID: the unique identifier from Spotify for the SPADE playlist
+@desciption: Adds the searced song to a SPADE Playlist on the user's Spotify account.
+ */
+function addTrack(req, playlistID) {
+  var url = 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?';
+  url += querystring.stringify({
+    uris: req.query.trackURI
+  });
+  var options = {
+    url: url,
+    body: {
+      name: req.query.name,
+      description: req.query.description,
+      public: false
+    },
+    headers: {
+      'Authorization': 'Bearer ' + req.query.access_token,
+      'Accept': 'application/json'
+    },
+    json: true
+  };
+  //Adding song to playlist
+  request.post(options, function(error, response, trackData) {
+    if (!error && response.statusCode == 201) {
+      console.log('song added');
+    } else {
+      console.log('error: ', response.statusCode);
+      console.log(url);
+    }
+  });
+}
+
 //Helps autenticate user
 var generateRandomString = function(length) {
   var text = '';
@@ -231,6 +345,7 @@ var generateRandomString = function(length) {
   }
   return text;
 };
+
 
 
 module.exports = router;
