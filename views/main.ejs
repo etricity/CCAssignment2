@@ -253,11 +253,6 @@ var currentTrack;
   }
 
 
-  function test() {
-    console.log('works');
-  }
-
-
   function getUserData() {
     //Variable for API call data
   var data;
@@ -280,12 +275,16 @@ var currentTrack;
 
   //This is were you should populate the HTML with info
   function success(data) {
+    if(data) {
+
+
     currentTrack = data[0].tracks.items[0];
     console.log('DATA: ', data);
     firebase.analytics().logEvent('search', { searchTerms:document.getElementById("song-name").value});
     paintSongData(data[0]);
     paintArtistData(data[1]);
     paintAlbumData(data[2]);
+  }
   }
   function error(error) {
     console.error(error);
