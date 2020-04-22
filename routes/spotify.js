@@ -82,7 +82,6 @@ router.get('/callback', function(req, res, next) {
         request.get(options, function(error, response, body) {
           //Log user data
           if (!error && response.statusCode == 200) {
-            console.log('User Data: ', body);
             firebase.logUser(body);
           }
         });
@@ -247,7 +246,6 @@ router.get('/addTrackToPlaylist', function(req, res, next) {
 
       //Check to see if a 'SPADE' playlist exists
       for (var i = 0; i < playlists.items.length; i++) {
-        console.log(playlists.items[i].name);
         if (playlists.items[i].name == 'SPADE') {
           playlistID = playlists.items[i].id;
           createPlaylist = false;
@@ -327,10 +325,9 @@ function addTrack(req, playlistID) {
   //Adding song to playlist
   request.post(options, function(error, response, trackData) {
     if (!error && response.statusCode == 201) {
-      console.log('song added');
+      console.log('Song Added!');
     } else {
       console.log('error: ', response.statusCode);
-      console.log(url);
     }
   });
 }
