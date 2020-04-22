@@ -283,6 +283,7 @@ router.get('/addTrackToPlaylist', function(req, res, next) {
         console.log('SPADE Playlist detected!');
         //Add the track to the playlist
         addTrack(req, playlistID);
+        firebase.saveTrack(req.query.trackData);
       }
       //ELSE statement for the inital request (get all playlists)
     } else {
@@ -307,7 +308,7 @@ router.get('/webplayer', function(req, res, next) {
 function addTrack(req, playlistID) {
   var url = 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?';
   url += querystring.stringify({
-    uris: req.query.trackURI
+    uris: req.query.trackData.trackURI
   });
   var options = {
     url: url,

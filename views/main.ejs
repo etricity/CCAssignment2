@@ -252,7 +252,7 @@ var currentTrack;
           name: 'SPADE',
           description: 'Songs added via SPADE',
           userID: userData.id,
-          trackURI: currentTrack.uri,
+          trackData: {trackURI: currentTrack.uri, trackID: currentTrack.id, trackName: currentTrack.name},
           access_token: access_token
         }
       });

@@ -35,6 +35,7 @@ module.exports = {
           country: userData.country,
           //Will not be added to the DB. Here purely for user model reference
           searchHist: null,
+          savedTracks: null,
           lastSearch: null,
           loginCount: 0,
         });
@@ -100,5 +101,14 @@ module.exports = {
     }, function(errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
+  },
+  saveTrack: function(trackData){
+    var userSavedTracks = currentUserRef.child('savedTracks');
+    console.log(trackData.trackID);
+    userSavedTracks.push().set({
+      trackID: trackData.trackID,
+      trackName: trackData.trackName
+});
+
   }
 };
