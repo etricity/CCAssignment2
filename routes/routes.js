@@ -1,7 +1,7 @@
 //Dependenices
 var express = require('express');
 var router = express.Router();
-var spotify = require('./spotify.js');
+var spotify = require('../backendJS/spotify.js');
 
 router.get('/', function(req, res, next) {
   res.render('login');
