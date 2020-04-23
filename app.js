@@ -10,8 +10,7 @@ require('dotenv').config();
 console.log(process.env.TEST);
 
 //Routes
-var routes = require('./routes/index');
-var spotify = require('./routes/spotify');
+var routes = require('./routes/routes');
 
 //App
 var app = express();
@@ -34,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')))
   .use(cookieParser());
 
 app.use('/', routes);
-app.use('/spotify', spotify);
 
 
 
