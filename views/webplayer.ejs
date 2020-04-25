@@ -92,6 +92,7 @@
 <script type="text/javascript" src="/js/webplayer/webplayer.js"></script>
 <script type="text/javascript" src="/js/webplayer/ajaxRequests.js"></script>
 <script type="text/javascript" src="/js/webplayer/paintPage.js"></script>
+<script type="text/javascript" src="/js/utility.js"></script>
 
 <script>
   //Getting parameter codes from URL
@@ -114,16 +115,5 @@
   function success(response) {
       console.log(response);
       paintPage(response);
-  }
-
-  //Utility Funtion
-  function getHashParams() {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    while (e = r.exec(q)) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
   }
 </script>
