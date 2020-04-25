@@ -70,7 +70,7 @@ function addTrack(req, playlistID) {
 //Module Export Functions
 exports.spotifyLogin = function(res) {
   var state = generateRandomString(16);
-  var scope = 'user-read-private user-read-email playlist-read-private streaming playlist-modify-public playlist-modify-private playlist-read-collaborative';
+  var scope = 'user-read-private user-read-email playlist-read-private streaming playlist-modify-public playlist-modify-private playlist-read-collaborative user-top-read';
   res.cookie(stateKey, state);
 
   res.redirect('https://accounts.spotify.com/authorize?' +

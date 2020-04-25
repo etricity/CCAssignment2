@@ -1,5 +1,7 @@
+
 var userData;
 var currentTrack;
+
   var params = getHashParams();
   var access_token = params.access_token,
     refresh_token = params.refresh_token;
@@ -14,6 +16,11 @@ var currentTrack;
       success: function (response) {
         userData = response;
         paintPage(response);
+
+        var codes = window.location.hash.substr(1) + '&userID=' + response.id;
+        var link = "/spotify/activity/#" + codes;
+        document.getElementById("activity").setAttribute("href", link);
+
       }
     });
   }
@@ -61,15 +68,4 @@ var currentTrack;
         }
       });
     }
-  }
-
-  //Utility Function
-  function getHashParams() {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    while (e = r.exec(q)) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
   }

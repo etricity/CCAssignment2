@@ -37,5 +37,10 @@ router.get('/spotify/webplayer', function(req, res, next) {
   res.render('webplayer');
 });
 
+//Activity
+router.get('/spotify/activity', function(req, res, next) {
+  res.render('activity');
+});
+
 
 module.exports = router;
