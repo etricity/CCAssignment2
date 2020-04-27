@@ -2,7 +2,8 @@ const db = firebase.database();
 
 var params = getHashParams();
 var access_token = params.access_token,
-  refresh_token = params.refresh_token;
+  refresh_token = params.refresh_token,
+  userID = params.userID;
 
 var data = [];
 
@@ -32,7 +33,7 @@ function getPersonalisedData() {
 
   //Request user's SPADE data from firebase
   var usersRef = db.ref("users");
-  usersRef.orderByKey().equalTo('bvrtpgo0cdzuo4i1htm78rvea').once("value", function(snapshot) {
+  usersRef.orderByKey().equalTo(userID).once("value", function(snapshot) {
     console.log(snapshot.val());
     data.push(snapshot.val());
 
