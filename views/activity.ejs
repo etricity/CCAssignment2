@@ -16,7 +16,7 @@
     </table>
     </div>
    
-
+<div id="songsDiv">
   <table id="songsTable">
     <thead>
         <tr>
@@ -26,6 +26,9 @@
     <tbody>   
     </tbody>
 </table>
+
+</div>
+
 
 
 </body>
@@ -56,7 +59,8 @@
 <script>
 
   window.onload = () => {
-    data = getPersonalisedData();
+    var data = getPersonalisedData();
+
   };
 
   function success(data) {

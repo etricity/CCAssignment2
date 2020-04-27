@@ -1,5 +1,5 @@
 function paintPage(data) {
-    this.data = data;
+    // this.data = data;
   drawCharts(data);
 }
 
@@ -23,7 +23,7 @@ function drawTopSongs(data) {
     .getElementsByTagName("tbody")[0];
 
   data.items.forEach((element) => {
-    var myHtmlContent = "<h3 id='login'>" + element.name + "</h3>";
+    var myHtmlContent = element.name;
     var newRow = tableRef.insertRow(tableRef.rows.length);
     newRow.innerHTML = myHtmlContent;
   });
@@ -35,7 +35,7 @@ function drawTopArtists(data) {
     .getElementsByTagName("tbody")[0];
 
   data.items.forEach((element) => {
-    var myHtmlContent = "<h3 id='login'>" + element.name + "</h3>";
+    var myHtmlContent =  "<p>" + element.name + "</p>" ;
     var newRow = tableRef.insertRow(tableRef.rows.length);
     newRow.innerHTML = myHtmlContent;
   });
