@@ -10,32 +10,39 @@ var data = [];
 
 //Reuqest user's top tracks & artists from Spotify
 function getPersonalisedData() {
-  $.ajax({
-    url: 'https://api.spotify.com/v1/me/top/' + 'tracks',
-    headers: {
-      'Authorization': 'Bearer ' + access_token
-    },
-    success: function (topTracks) {
-      data.push(topTracks);
-    }
-  });
 
-  $.ajax({
-    url: 'https://api.spotify.com/v1/me/top/' + 'artists',
-    headers: {
-      'Authorization': 'Bearer ' + access_token
-    },
-    success: function (topArtists) {
-      data.push(topArtists);
-      success(data);
-    }
-  });
+  const p1 = getTracks();
+  const p2 = getArtists();
+  const p3 = getArticlePromise(userID);
 
-  //Request user's SPADE data from firebase
+  Promise.all([p1, p2, p3]).then(function(values) {
+    success(values);
+  });
+}
+function getTracks() {
+  return $.ajax({
+      url: 'https://api.spotify.com/v1/me/top/' + 'tracks',
+      headers: {
+        'Authorization': 'Bearer ' + access_token
+      }
+    });
+}
+
+function getArtists() {
+  return  $.ajax({
+      url: 'https://api.spotify.com/v1/me/top/' + 'artists',
+      headers: {
+        'Authorization': 'Bearer ' + access_token
+      }
+    });
+}
+
+function getArticlePromise(id) {
+  // Request user's SPADE data from firebase
   var usersRef = db.ref("users");
-  usersRef.orderByKey().equalTo(userID).once("value", function(snapshot) {
-    console.log(snapshot.val());
-    data.push(snapshot.val());
+  return usersRef.orderByKey().equalTo(id).once("value").then(function(snapshot) {
+      // The Promise was "fulfilled" (it succeeded).
+      return snapshot.val();
 
-  });
+    });
 }
