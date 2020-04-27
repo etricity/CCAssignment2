@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var request = require('request');
 var async = require('async');
 var firebase = require('./firebase');
+var translate = require('./translate');
 
 //Spotify authentication variables
 var client_id = '648d57bb4a724393b2bafbb05b3c73d3';
