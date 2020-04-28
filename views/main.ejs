@@ -200,19 +200,19 @@
         <div id='song-div'>
           <table id='song-Table'>
             <tr>
-              <td>Song Name </td>
+              <td id='SN'>Song Name </td>
               <td id='result-name'></td>
             </tr>
             <tr>
-              <td>Artist</td>
+              <td id = 'AR'>Artist</td>
               <td id='artist'></td>
             </tr>
             <tr>
-              <td>Album</td>
+              <td id = 'AL'>Album</td>
               <td id='album'></td>
             </tr>
             <tr>
-              <td>Popularity Rating</td>
+              <td id = 'PR'>Popularity Rating</td>
               <td id='popularity'></td>
             </tr>
           </table>
@@ -229,19 +229,19 @@
           <div id='album-image'><img src=""></div>
           <table id='album-Table'>
             <tr>
-              <td>Album Name </td>
+              <td id = 'AN'>Album Name </td>
               <td id='album-name'></td>
             </tr>
             <tr>
-              <td>Release Date</td>
+              <td id = 'RD'>Release Date</td>
               <td id='release-date'></td>
             </tr>
             <tr>
-              <td>Album Type</td>
+              <td id = 'ALT'>Album Type</td>
               <td id='album-type'></td>
             </tr>
             <tr>
-              <td>Total Tracks</td>
+              <td id = 'TT'>Total Tracks</td>
               <td id='total-tracks'></td>
             </tr>
           </table>
@@ -252,11 +252,11 @@
           <div id='follow-link'><a href="">Follow</a></div>
           <table id='artist-Table'>
             <tr>
-              <td>Artist Name </td>
+              <td id = 'ARN'>Artist Name </td>
               <td id='artist-name'></td>
             </tr>
             <tr>
-              <td>Followers</td>
+              <td id = 'F'>Followers</td>
               <td id='followers'></td>
             </tr>
 
@@ -328,8 +328,7 @@ window.onload = () => {
     console.error(error);
   }
   function repaintPage(data) {
-    console.log('DATA TO BE REPAINTED');
-    console.log(data);
+    paintTranslated(data);
   }
 </script>
 

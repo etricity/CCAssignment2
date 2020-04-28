@@ -16,7 +16,8 @@ exports.translateText = async function(req, res) {
   //
 
 //Uncomment for testing or final!!
-  configTranslate(req, res);
+   configTranslate(req, res);
+
   let [translations] = await translate.translate(text, target);
   translations = Array.isArray(translations) ? translations : [translations];
   console.log('Translations:');
@@ -24,34 +25,13 @@ exports.translateText = async function(req, res) {
     console.log(`${text[i]} => (${target}) ${translation}`);
   });
   res.send(translations);
-   console.log(translations);
+  console.log(translations);
 
-//Comment this for testing or final
-   // console.log(typeof text);
-   // res.send(JSON.stringify(text).toUpperCase());
 
 }
 
 function configTranslate(req, res) {
   console.log(req.query);
-  text = jsonToArray(req.query);
+  text = req.query.text;
   target = req.query.lang;
-}
-
-function jsonToArray(jOb) {
-  var data = Object.values(jOb);
-  var array = [];
-  //skip first element (target language)
-  for(var i = 1; i < data.length; i++) {
-    array.push(data[i]);
-  }
-  return array;
-}
-
-async function listLanguages() {
-  // Lists available translation language with their names in English (the default).
-  const [languages] = await translate.getLanguages();
-
-  console.log('Languages:');
-  languages.forEach(language => console.log(language));
 }

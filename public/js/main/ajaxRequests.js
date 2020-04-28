@@ -75,21 +75,17 @@ var currentTrack;
     var e = document.getElementById("lang");
     var lang = e.options[e.selectedIndex].value;
 
+    var text = ['Song Name', 'Artist', 'Album', 'Popularity Rating', 'Album Name', 'Release Date', 'Album Type', 'Total Tracks', 'Artist Name', 'Followers'];
+
+    console.log(text);
+
     //Get elements by document.()......
     $.ajax({
       url: '/translate',
       data: {
         lang: lang,
-          track: document.getElementById("result-name").innerText,
-          artist: document.getElementById("artist").innerText,
-          album: document.getElementById("album").innerText,
-          albumtype: document.getElementById("album-type").innerText,
-        },
+        text: text
+      },
         success: repaintPage
     });
-  }
-
-  function test(data) {
-    console.log('HERE');
-    console.log(data);
   }
