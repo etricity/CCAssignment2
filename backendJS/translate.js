@@ -16,19 +16,19 @@ exports.translateText = async function(req, res) {
   //
 
 //Uncomment for testing or final!!
-
-  // let [translations] = await translate.translate(text, target);
-  // translations = Array.isArray(translations) ? translations : [translations];
-  // console.log('Translations:');
-  // translations.forEach((translation, i) => {
-  //   console.log(`${text[i]} => (${target}) ${translation}`);
-  // });
-  // res.send(translations);
-   // console.log(translations);
+  configTranslate(req, res);
+  let [translations] = await translate.translate(text, target);
+  translations = Array.isArray(translations) ? translations : [translations];
+  console.log('Translations:');
+  translations.forEach((translation, i) => {
+    console.log(`${text[i]} => (${target}) ${translation}`);
+  });
+  res.send(translations);
+   console.log(translations);
 
 //Comment this for testing or final
-   console.log(typeof text);
-   res.send(JSON.stringify(text).toUpperCase());
+   // console.log(typeof text);
+   // res.send(JSON.stringify(text).toUpperCase());
 
 }
 
