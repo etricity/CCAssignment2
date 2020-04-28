@@ -69,3 +69,27 @@ var currentTrack;
       });
     }
   }
+
+  //Google Translate Call
+  function changeLanguage() {
+    var e = document.getElementById("lang");
+    var lang = e.options[e.selectedIndex].value;
+
+    //Get elements by document.()......
+    $.ajax({
+      url: '/translate',
+      data: {
+        lang: lang,
+          track: document.getElementById("result-name").innerText,
+          artist: document.getElementById("artist").innerText,
+          album: document.getElementById("album").innerText,
+          albumtype: document.getElementById("album-type").innerText,
+        },
+        success: repaintPage
+    });
+  }
+
+  function test(data) {
+    console.log('HERE');
+    console.log(data);
+  }
