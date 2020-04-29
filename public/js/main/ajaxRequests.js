@@ -77,9 +77,7 @@ var currentTrack;
 
     var text = ['Song Name', 'Artist', 'Album', 'Popularity Rating', 'Album Name', 'Release Date', 'Album Type', 'Total Tracks', 'Artist Name', 'Followers'];
 
-    console.log(text);
-
-    //Get elements by document.()......
+      if (currentTrack) {
     $.ajax({
       url: '/translate',
       data: {
@@ -88,4 +86,5 @@ var currentTrack;
       },
         success: repaintPage
     });
+  }
   }
