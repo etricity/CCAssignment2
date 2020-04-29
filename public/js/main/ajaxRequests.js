@@ -69,3 +69,22 @@ var currentTrack;
       });
     }
   }
+
+  //Google Translate Call
+  function changeLanguage() {
+    var e = document.getElementById("lang");
+    var lang = e.options[e.selectedIndex].value;
+
+    var text = ['Song Name', 'Artist', 'Album', 'Popularity Rating', 'Album Name', 'Release Date', 'Album Type', 'Total Tracks', 'Artist Name', 'Followers'];
+
+      if (currentTrack) {
+    $.ajax({
+      url: '/translate',
+      data: {
+        lang: lang,
+        text: text
+      },
+        success: repaintPage
+    });
+  }
+  }

@@ -18,9 +18,6 @@ var stateKey = 'spotify_auth_state';
 //Comment out line below for GCP : Uncomment line to test locally (localhost 8080)
 redirect_uri = 'http://localhost:8080/spotify/callback';
 
-
-
-
 //Internal Functions
 var generateRandomString = function(length) {
   var text = '';

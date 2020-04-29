@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var querystring = require('querystring');
+var favicon = require('serve-favicon');
 require('dotenv').config();
 console.log(process.env.TEST);
 
@@ -22,6 +23,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs')
 
 //Middleware --> Runs before any request get/post
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

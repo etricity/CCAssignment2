@@ -2,9 +2,14 @@
 var express = require('express');
 var router = express.Router();
 var spotify = require('../backendJS/spotify.js');
+var translator = require('../backendJS/translate.js');
 
 router.get('/', function(req, res, next) {
   res.render('login');
+});
+
+router.get('/translate', function(req, res, next) {
+  translator.translateText(req, res);
 });
 
 //Spotify Authentication Login & Redirect to main page (router.get'/spotify')
@@ -41,6 +46,7 @@ router.get('/spotify/webplayer', function(req, res, next) {
 router.get('/spotify/activity', function(req, res, next) {
   res.render('activity');
 });
+
 
 
 module.exports = router;

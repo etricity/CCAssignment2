@@ -54,3 +54,20 @@ function paintAlbumData(data) {
   document.getElementById("total-tracks").innerText = data.albums.items[0].total_tracks;
   document.getElementById("album-div").style.visibility = "visible";
 }
+function paintTranslated(data) {
+  console.log('DATA TO BE REPAINTED');
+  console.log(data);
+
+  document.getElementById("SN").innerText = data[0];
+  document.getElementById("AR").innerText = data[1];
+  document.getElementById("AL").innerText = data[2];
+  document.getElementById("PR").innerText = data[3];
+  document.getElementById("AN").innerText = data[4];
+  document.getElementById("RD").innerText = data[5];
+  document.getElementById("ALT").innerText = data[6];
+  document.getElementById("TT").innerText = data[7];
+  document.getElementById("ARN").innerText = data[8];
+  document.getElementById("F").innerText = data[9];
+
+
+}
