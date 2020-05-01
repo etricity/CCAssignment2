@@ -84,7 +84,9 @@ var currentTrack;
         lang: lang,
         text: text
       },
-        success: repaintPage
+        success: (translateText) => {
+          paintTranslated(translateText, lang);
+        }
     });
   }
   }

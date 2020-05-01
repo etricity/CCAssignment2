@@ -54,9 +54,11 @@ function paintAlbumData(data) {
   document.getElementById("total-tracks").innerText = data.albums.items[0].total_tracks;
   document.getElementById("album-div").style.visibility = "visible";
 }
-function paintTranslated(data) {
+function paintTranslated(data, lang) {
   console.log('DATA TO BE REPAINTED');
   console.log(data);
+  document.getElementById("result").setAttribute("lang", lang);
+  console.log(  document.getElementById("result"));
 
   document.getElementById("SN").innerText = data[0];
   document.getElementById("AR").innerText = data[1];

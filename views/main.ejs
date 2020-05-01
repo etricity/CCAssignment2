@@ -194,7 +194,7 @@
 
       </div>
 
-      <div id="result">
+      <div id="result" lang = "">
 
 
         <div id='song-div'>
@@ -279,6 +279,7 @@
 
 //Onload
 window.onload = () => {
+  document.getElementById("result").setAttribute("lang", 'eu');
   getUserData();
 
   var codes = window.location.hash.substr(1);
@@ -326,9 +327,6 @@ window.onload = () => {
   }
   function error(error) {
     console.error(error);
-  }
-  function repaintPage(data) {
-    paintTranslated(data);
   }
 </script>
 
