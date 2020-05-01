@@ -45,10 +45,16 @@
 
 
       <div class='link-content'>
-        <a id="webplayer">Dashboard</a>
+        <a id="dashboard">Dashboard</a>
+      </div>
+      <div class='link-content'>
+        <a id = "activity"> My Activity</a>
       </div>
       <div class='link-content'>
         <a href="https://www.spotify.com/au/"> Go To Spotify</a>
+      </div>
+      <div class='link-content'>
+        <a id = "logout"> Log-Out</a>
       </div>
     </nav>
 
@@ -109,7 +115,7 @@
 
     var codes = window.location.hash.substr(1);
     var link = "/spotify/#" + codes;
-    document.getElementById("webplayer").setAttribute("href", link);
+    document.getElementById("dashboard").setAttribute("href", link);
   }
 
   function success(response) {

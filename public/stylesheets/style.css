@@ -277,6 +277,23 @@ img {
 
 }
 
+#chart{
+  display: inline;
+  background-color: #1db954;
+  border-radius: 2em;
+}
+
+#charts #songname{
+  display: block;
+  background-color: #1db954;
+  border-radius: 2em;
+}
+#charts #trackName{
+  display: block;
+  background-color: #1db954;
+  border-radius: 2em;
+}
+
 
 #activityTables{
   background-color: #1db954;

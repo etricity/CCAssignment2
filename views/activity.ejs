@@ -1,51 +1,97 @@
-<link rel="stylesheet" href="/stylesheets/style.css">
+<!doctype html>
+<html lang="en">
 
-<body>
-  <div id="login">
-    <h1>My Activity</h1>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<div class="header">
+  <div id='title'>
+    <h1 id='greeting'></h1>
   </div>
 
-  <div id="chart_div songname"></div>
+</div>
+<div class="container">
+  <div class="sideBar">
+    <nav>
+      <div class='full-content'>
+        <p> S.P.A.D.E</p>
+      </div>
 
+      <div id='table-div'>
+        <table id='user-Table'>
+          <tr>
+            <td>Name </td>
+            <td id='name'></td>
+          </tr>
+          <tr>
+            <td>Country</td>
+            <td id='country'></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td id='email'></td>
+          </tr>
+          <tr>
+            <td>Product</td>
+            <td id='product'></td>
+          </tr>
+        </table>
+      </div>
 
-  <div id="chart_div trackName"></div>
-
-  <div id="activityTables">
-  
-
-
-
-    <table id="artistTable">
-      <thead>
-        <tr>
-          <th>Top Artists</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-
-    <table id="songsTable">
-      <thead>
-        <tr>
-          <th>Top Songs</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+      <div class='link-content'>
+        <a id = "activity"> Dashboard</a>
+      </div>
+      <div class='link-content'>
+        <a id= "webplayer">Spotify Web Player</a>
+      </div>
+      <div class='link-content'>
+        <a href="https://www.spotify.com/au/"> Go To Spotify</a>
+      </div>
+      <div class='link-content'>
+        <a id = "logout"> Log-Out</a>
+      </div>
+    </nav>
 
   </div>
+  <div class="bodyContent">
+    <body>
+      <div id="login">
+        <h1>My Activity</h1>
+      </div>
 
+      <div class="charts">
+        <div id="chart_div songname"></div>    
+        <div id="chart_div trackName"></div>
+      </div>
 
-
-</body>
-
-
-
-
-
+      <div id="activityTables">
+        <table id="artistTable">
+          <thead>
+            <tr>
+              <th>Top Artists</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+    
+        <table id="songsTable">
+          <thead>
+            <tr>
+              <th>Top Songs</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </body>
+  </div>
+</div>
 <footer> S.P.A.D.E &COPY; </footer>
+
 
 <!--Core Firebase JS SDK (must be listed first) -->
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
@@ -57,18 +103,14 @@
 <!--Load the AJAX API For Charts-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-
 <!--Adding Google Analytics config specify to this project - Local JS-->
 <script type="text/javascript" src="/js/analyticsConfig.js"></script>
 <script type="text/javascript" src="/js/utility.js"></script>
 <script type="text/javascript" src="/js/activity/dataRequests.js"></script>
 <script type="text/javascript" src="/js/activity/paintPage.js"></script>
-
 <script>
-
   window.onload = () => {
     var data = getPersonalisedData();
-
   };
 
   function success(data) {
@@ -78,7 +120,5 @@
     console.log('DATA[2]:  ', data[2]);
     console.log(userID);
     paintPage(data);
-
   }
-
 </script>
