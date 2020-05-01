@@ -37,6 +37,7 @@
 body {
   background-color: black;
   /* margin-left: 160px; */
+  text-align: center;
 }
 footer {
   background-color: #191414;
@@ -272,6 +273,23 @@ img {
 #web-buttons button{
   background-color: #1db954;
   border-radius: 1em;
+  padding: 1em;
+
+}
+
+
+#activityTables{
+  background-color: #1db954;
+  display: inline-block;
+  align-content: center;
+  margin: 1em;
+  border-radius: 2em;
+
+}
+#activityTables table{
+  /* text-align: center; */
+  display: inline-block;
+  width: auto;
   padding: 1em;
 
 }

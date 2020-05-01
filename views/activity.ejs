@@ -1,12 +1,50 @@
 <link rel="stylesheet" href="/stylesheets/style.css">
-<div id="center"></div>
 
 <body>
-    <div id="login">
-        <h1>My Activity</h1>
-    </div>
+  <div id="login">
+    <h1>My Activity</h1>
+  </div>
+
+  <div id="chart_div songname"></div>
+
+
+  <div id="chart_div trackName"></div>
+
+  <div id="activityTables">
+  
+
+
+
+    <table id="artistTable">
+      <thead>
+        <tr>
+          <th>Top Artists</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <table id="songsTable">
+      <thead>
+        <tr>
+          <th>Top Songs</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+  </div>
+
+
 
 </body>
+
+
+
+
+
 <footer> S.P.A.D.E &COPY; </footer>
 
 <!--Core Firebase JS SDK (must be listed first) -->
@@ -14,21 +52,33 @@
 <!--Adding Google analytics product -->
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<!--Adding Google Analytics config specify to this project -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<!--Load the AJAX API For Charts-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<!--Adding Google Analytics config specify to this project - Local JS-->
 <script type="text/javascript" src="/js/analyticsConfig.js"></script>
 <script type="text/javascript" src="/js/utility.js"></script>
 <script type="text/javascript" src="/js/activity/dataRequests.js"></script>
 <script type="text/javascript" src="/js/activity/paintPage.js"></script>
 
 <script>
+
   window.onload = () => {
-    getPersonalisedData();
+    var data = getPersonalisedData();
+
   };
 
   function success(data) {
+    console.log(data);
     console.log('DATA[0]:  ', data[0]);
     console.log('DATA[1]:  ', data[1]);
     console.log('DATA[2]:  ', data[2]);
+    console.log(userID);
+    paintPage(data);
+
   }
+
 </script>

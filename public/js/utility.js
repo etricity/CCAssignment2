@@ -8,3 +8,12 @@ function getHashParams() {
   }
   return hashParams;
 }
+
+//Utility to sort 2D Array By Column
+function sortBySecondColumn(x, y) {
+  if (x[1] === y[1]) {
+    return 0;
+  } else {
+    return x[1] < y[1] ? -1 : 1;
+  }
+}
