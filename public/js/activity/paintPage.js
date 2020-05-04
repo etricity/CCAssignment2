@@ -91,7 +91,7 @@ function drawSearchHist(data) {
     };
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(
-      document.getElementById("chart_div songname")
+      document.getElementById("songname")
     );
     chart.draw(dataToWrite, options);
 
@@ -115,7 +115,7 @@ function drawSearchHist(data) {
      };
      // Instantiate and draw our chart, passing in some options.
      var char = new google.visualization.BarChart(
-       document.getElementById("chart_div trackName")
+       document.getElementById("trackName")
      );
      char.draw(dataAddedToWrite, opt);
 
