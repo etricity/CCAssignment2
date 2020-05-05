@@ -41,7 +41,7 @@
       </div>
 
       <div class='link-content'>
-        <a id = "activity"> Dashboard</a>
+        <a id = "dashboard"> Dashboard</a>
       </div>
       <div class='link-content'>
         <a id= "webplayer">Spotify Web Player</a>
@@ -62,7 +62,7 @@
       </div>
 
       <div class="charts">
-        <div id="songname"></div>    
+        <div id="songname"></div>
         <div id="trackName"></div>
       </div>
 
@@ -76,7 +76,7 @@
           <tbody>
           </tbody>
         </table>
-    
+
         <table id="songsTable">
           <thead>
             <tr>
@@ -111,14 +111,16 @@
 <script>
   window.onload = () => {
     var data = getPersonalisedData();
+
+    //Setting links for website navigation
+    var params = getHashParams();
+     var link = "/spotify/#" + $.param(params);
+     document.getElementById("dashboard").setAttribute("href", link);
+     document.getElementById("webplayer").setAttribute("href", "/spotify/webplayer/#" + $.param(params));
+     document.getElementById("logout").setAttribute("href", "/");
   };
 
   function success(data) {
-    console.log(data);
-    console.log('DATA[0]:  ', data[0]);
-    console.log('DATA[1]:  ', data[1]);
-    console.log('DATA[2]:  ', data[2]);
-    console.log(userID);
     paintPage(data);
   }
 </script>

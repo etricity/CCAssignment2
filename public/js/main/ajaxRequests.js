@@ -17,9 +17,21 @@ var currentTrack;
         userData = response;
         paintPage(response);
 
-        var codes = window.location.hash.substr(1) + '&userID=' + response.id;
-        var link = "/spotify/activity/#" + codes;
-        document.getElementById("activity").setAttribute("href", link);
+        console.log(response);
+
+        var dashboardData = {
+          id: response.id,
+          name: response.display_name,
+          country: response.country,
+          email: response.email,
+          product: response.product};
+        console.log(dashboardData);
+
+        //Setting links for website navigation
+        var params = window.location.hash.substr(1) + '&' + $.param(dashboardData);
+        document.getElementById("activity").setAttribute("href", "/spotify/activity/#" + params);
+        document.getElementById("webplayer").setAttribute("href", "/spotify/webplayer/#" + params);
+        document.getElementById("logout").setAttribute("href", "/");
 
       }
     });
@@ -44,6 +56,21 @@ var currentTrack;
       success: success,
       error: error
     });
+  }
+  //Data Request Successful!
+  function success(data) {
+    if (data) {
+      currentTrack = data[0].tracks.items[0];
+      firebase.analytics().logEvent('search', {
+        searchTerms: document.getElementById("song-name").value
+      });
+      paintSongData(data[0]);
+      paintArtistData(data[1]);
+      paintAlbumData(data[2]);
+    }
+  }
+  function error(error) {
+    console.error(error);
   }
 
   function addTrackToPlaylist() {

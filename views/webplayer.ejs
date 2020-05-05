@@ -101,25 +101,13 @@
 <script type="text/javascript" src="/js/utility.js"></script>
 
 <script>
-  //Getting parameter codes from URL
   var params = getHashParams();
-  var access_token = params.access_token,
-    refresh_token = params.refresh_token;
-  //Variable to acccess the player outside of the intialisation
-  var p;
 
+ //Setting links for website navigation
+ var link = "/spotify/#" + $.param(params);
+ document.getElementById("dashboard").setAttribute("href", link);
+ document.getElementById("activity").setAttribute("href", "/spotify/activity/#" + $.param(params));
+ document.getElementById("logout").setAttribute("href", "/");
+ paintDashboard();
 
-  window.onload = () => {
-
-    getUserData();
-
-    var codes = window.location.hash.substr(1);
-    var link = "/spotify/#" + codes;
-    document.getElementById("dashboard").setAttribute("href", link);
-  }
-
-  function success(response) {
-      console.log(response);
-      paintPage(response);
-  }
 </script>

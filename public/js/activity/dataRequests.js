@@ -1,9 +1,10 @@
 const db = firebase.database();
 
 var params = getHashParams();
+console.log(params);
 var access_token = params.access_token,
   refresh_token = params.refresh_token,
-  userID = params.userID;
+  userID = params.id;
 
 var data = [];
 
@@ -23,7 +24,7 @@ function getTracks() {
   return $.ajax({
       url: 'https://api.spotify.com/v1/me/top/' + 'tracks',
       headers: {
-        'Authorization': 'Bearer ' + access_token
+        'Authorization': 'Bearer ' + params.access_token
       }
     });
 }
@@ -32,13 +33,14 @@ function getArtists() {
   return  $.ajax({
       url: 'https://api.spotify.com/v1/me/top/' + 'artists',
       headers: {
-        'Authorization': 'Bearer ' + access_token
+        'Authorization': 'Bearer ' + params.access_token
       }
     });
 }
 
 function getArticlePromise(id) {
   // Request user's SPADE data from firebase
+  console.log(id);
   var usersRef = db.ref("users");
   return usersRef.orderByKey().equalTo(id).once("value").then(function(snapshot) {
       // The Promise was "fulfilled" (it succeeded).

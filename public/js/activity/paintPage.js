@@ -1,6 +1,7 @@
 function paintPage(data) {
   // this.data = data;
   drawCharts(data);
+  paintDashboard();
 }
 
 function drawCharts(data) {
@@ -95,18 +96,18 @@ function drawSearchHist(data) {
     );
     chart.draw(dataToWrite, options);
 
-    // DRAW ADD SONG 
+    // DRAW ADD SONG
 
      // Create the data table.
      var dataAddedToWrite = new google.visualization.DataTable();
      dataAddedToWrite.addColumn("string", "Songs");
      dataAddedToWrite.addColumn("number", "Count");
- 
+
      for (var count = 0; count < saveData.length; count++) {
        //   newData[count].pop;
        dataAddedToWrite.addRows([saveData[count]]);
      }
- 
+
      // Set chart options
      var opt = {
        title: "Songs You Added To Spotify",
@@ -214,7 +215,12 @@ function collapseSavedTracksData(data) {
   return records;
 }
 
-
+function paintDashboard() {
+  document.getElementById("name").innerText = params.name;
+  document.getElementById("email").innerText = params.email;
+  document.getElementById("country").innerText = params.country;
+  document.getElementById("product").innerText = params.product;
+}
 
 
 
