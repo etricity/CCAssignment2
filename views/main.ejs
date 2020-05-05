@@ -284,12 +284,6 @@
 window.onload = () => {
   document.getElementById("result").setAttribute("lang", 'eu');
   getUserData();
-
-  var codes = window.location.hash.substr(1);
-  var link = "/spotify/webplayer/#" + codes;
-  document.getElementById("webplayer").setAttribute("href", link);
-
-
 }
 
   $('document').ready(function() {
@@ -315,22 +309,6 @@ window.onload = () => {
 
   });
 
-
-  //Data Request Successful!
-  function success(data) {
-    if (data) {
-      currentTrack = data[0].tracks.items[0];
-      firebase.analytics().logEvent('search', {
-        searchTerms: document.getElementById("song-name").value
-      });
-      paintSongData(data[0]);
-      paintArtistData(data[1]);
-      paintAlbumData(data[2]);
-    }
-  }
-  function error(error) {
-    console.error(error);
-  }
 </script>
 
 

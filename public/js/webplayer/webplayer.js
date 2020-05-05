@@ -1,9 +1,11 @@
 //Setting up Spotify Web Player
 
 var vol = 0.5;
+//Variable to acccess the player outside of the intialisation
+var p;
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = access_token;
+  const token = params.access_token;
   const player = new Spotify.Player({
     name: 'S.P.A.D.E Web Player',
     volume: vol,
