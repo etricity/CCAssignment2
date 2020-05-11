@@ -316,7 +316,9 @@ align-content: center;
   margin: 1em;
 
 }
-
+#padding{
+  padding: 2em;
+}
 
 #activityTables{
   background-color: #1db954;
