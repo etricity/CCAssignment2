@@ -47,6 +47,9 @@ router.get('/spotify/activity', function(req, res, next) {
   res.render('activity');
 });
 
+router.get('/spotify/addTopTracks', function(req, res, next) {
+  spotify.addTopSongs(req, res);
+});
 
 
 module.exports = router;

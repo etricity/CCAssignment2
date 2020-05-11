@@ -17,6 +17,7 @@ function getPersonalisedData() {
   const p3 = getArticlePromise(userID);
 
   Promise.all([p1, p2, p3]).then(function(values) {
+    data = values;
     success(values);
   });
 }
@@ -47,4 +48,42 @@ function getArticlePromise(id) {
       return snapshot.val();
 
     });
+}
+
+function addTopSongs() {
+  //Request to server
+  //Client-->Spotify
+  var uris = [];
+  console.log(data);
+
+  data[0].items.forEach((element) => {
+    uris.push(element.uri);
+  });
+console.log(uris);
+
+  $.ajax({
+    url: '/spotify/addTrackToPlaylist',
+    headers: {
+      'Authorization': 'Bearer ' + access_token
+    },
+    data: {
+      name: 'SPADE',
+      description: 'Songs added via SPADE',
+      userID: userID,
+      trackData: {
+        trackURI: uris,
+        trackID: '',
+        trackName: '',
+      },
+        multiTracks: 'true',
+      access_token: access_token
+    },
+    success: () => {
+      data[0].items.forEach((element) => {
+        firebase.analytics().logEvent('addTrackToPlaylist', {
+          trackName: element.name
+        });
+      });
+    }
+  });
 }

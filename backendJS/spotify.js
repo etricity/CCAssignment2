@@ -36,9 +36,22 @@ var generateRandomString = function(length) {
  */
 function addTrack(req, playlistID) {
   var url = 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?';
+
+//Adding Top Tracks
+if(req.query.multiTracks == 'true') {
+  console.log(typeof req.query.trackData.trackURI[0]);
+  url += "uris=";
+  req.query.trackData.trackURI.forEach((element) => {
+    url+=element + ",";
+  });
+  //Adding single song on Dasboard
+} else {
   url += querystring.stringify({
     uris: req.query.trackData.trackURI
   });
+}
+
+  console.log(url);
   var options = {
     url: url,
     body: {
@@ -272,8 +285,6 @@ Queries user's Spotify Account to see if a SPADE Playlist exists.
 If one exists, it adds the song, if not it creates one, then add the song.
  */
 exports.addTrackToPlaylist = function(req, res) {
-  var playlistID;
-
   //Request all user's existing playlists
   var url = 'https://api.spotify.com/v1/users/' + req.query.userID + '/playlists';
   var options = {
@@ -286,7 +297,6 @@ exports.addTrackToPlaylist = function(req, res) {
   request.get(options, function(error, response, playlists) {
     if (!error && response.statusCode == 200) {
       var createPlaylist = true;
-
       //Check to see if a 'SPADE' playlist exists
       for (var i = 0; i < playlists.items.length; i++) {
         if (playlists.items[i].name == 'SPADE') {
@@ -332,5 +342,12 @@ exports.addTrackToPlaylist = function(req, res) {
     } else {
       console.log('Status: ' + response.statusCode + '. Error: ' + error);
     }
+    res.end();
   });
+}
+
+
+
+exports.addTopSongs = function(req, res) {
+
 }

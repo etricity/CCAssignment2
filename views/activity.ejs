@@ -90,7 +90,7 @@
           </tbody>
         </table>
         <div class="web-buttons">
-          <button id="generatePlaylist">Generate Playlist From Your Top Songs</button>
+          <button id="addTopSongs">Add top songs to my SPADE playlist</button>
         </div>
         <div id="padding"></div>
 
@@ -132,4 +132,11 @@
   function success(data) {
     paintPage(data);
   }
+
+  $('#addTopSongs').on('click', function (ev) {
+    //Stop default post call
+    ev.preventDefault();
+      addTopSongs();
+  });
+
 </script>
