@@ -44,16 +44,16 @@
       </div>
 
       <div class='link-content'>
-        <a id = "activity"> My Activity</a>
+        <a id="activity"> My Activity</a>
       </div>
       <div class='link-content'>
-        <a id= "webplayer">Spotify Web Player</a>
+        <a id="webplayer">Spotify Web Player</a>
       </div>
       <div class='link-content'>
         <a href="https://www.spotify.com/au/"> Go To Spotify</a>
       </div>
       <div class='link-content'>
-        <a id = "logout"> Log-Out</a>
+        <a id="logout"> Log-Out</a>
       </div>
     </nav>
 
@@ -78,11 +78,14 @@
         <form id='form'>
           <p>Search For A Song</p>
           <input id='song-name' type="text" />
-          <button type=submit> Search</button>
+          <div class="web-buttons">
+            <button type=submit>Search</button>
+          </div>
           <p id='song-data'></p>
         </form>
-        <button id='addToPlaylist'> Save Song to my Spotify</button>
-
+        <div class="web-buttons">
+          <button id='addToPlaylist'> Save Song to my Spotify</button>
+       
         <select id="lang" name="lang" onchange="changeLanguage();">
           <option value="af">Afrikaans</option>
           <option value="sq">Albanian</option>
@@ -194,10 +197,10 @@
           <option value="yo">Yoruba</option>
           <option value="zu">Zulu</option>
         </select>
-
+      </div>
       </div>
 
-      <div id="result" lang = "">
+      <div id="result" lang="">
 
 
         <div id='song-div'>
@@ -207,15 +210,15 @@
               <td id='result-name'></td>
             </tr>
             <tr>
-              <td id = 'AR'>Artist</td>
+              <td id='AR'>Artist</td>
               <td id='artist'></td>
             </tr>
             <tr>
-              <td id = 'AL'>Album</td>
+              <td id='AL'>Album</td>
               <td id='album'></td>
             </tr>
             <tr>
-              <td id = 'PR'>Popularity Rating</td>
+              <td id='PR'>Popularity Rating</td>
               <td id='popularity'></td>
             </tr>
           </table>
@@ -232,19 +235,19 @@
           <div id='album-image'><img src=""></div>
           <table id='album-Table'>
             <tr>
-              <td id = 'AN'>Album Name </td>
+              <td id='AN'>Album Name </td>
               <td id='album-name'></td>
             </tr>
             <tr>
-              <td id = 'RD'>Release Date</td>
+              <td id='RD'>Release Date</td>
               <td id='release-date'></td>
             </tr>
             <tr>
-              <td id = 'ALT'>Album Type</td>
+              <td id='ALT'>Album Type</td>
               <td id='album-type'></td>
             </tr>
             <tr>
-              <td id = 'TT'>Total Tracks</td>
+              <td id='TT'>Total Tracks</td>
               <td id='total-tracks'></td>
             </tr>
           </table>
@@ -255,11 +258,11 @@
           <div id='follow-link'><a href="">Follow</a></div>
           <table id='artist-Table'>
             <tr>
-              <td id = 'ARN'>Artist Name </td>
+              <td id='ARN'>Artist Name </td>
               <td id='artist-name'></td>
             </tr>
             <tr>
-              <td id = 'F'>Followers</td>
+              <td id='F'>Followers</td>
               <td id='followers'></td>
             </tr>
 
@@ -280,15 +283,15 @@
 
 <script>
 
-//Onload
-window.onload = () => {
-  document.getElementById("result").setAttribute("lang", 'eu');
-  getUserData();
-}
+  //Onload
+  window.onload = () => {
+    document.getElementById("result").setAttribute("lang", 'eu');
+    getUserData();
+  }
 
-  $('document').ready(function() {
+  $('document').ready(function () {
     //When search is performed
-    $('#form').on('submit', function(ev) {
+    $('#form').on('submit', function (ev) {
       //Stop default post call
       ev.preventDefault();
       //API call to Spoify for user data
@@ -296,7 +299,7 @@ window.onload = () => {
     });
 
     //When addTrackToPlaylist button is clicked
-    $('#addToPlaylist').on('click', function(ev) {
+    $('#addToPlaylist').on('click', function (ev) {
       //Stop default post call
       ev.preventDefault();
       if (currentTrack) {

@@ -6,7 +6,7 @@ function paintPage(data) {
 
 function drawCharts(data) {
   // console.log("TESTING");
-  // console.log(data[1]);
+  console.log(data);
 
   var topSongs = data[0];
   var topArtist = data[1];
@@ -139,6 +139,14 @@ function collapseData(data) {
     var entries = 0;
     //Obj is search History
     var obj = data[k].searchHist;
+
+    var loginCount = data[k].loginCount;
+
+    if (loginCount){
+      document.getElementById("loginCount").innerText = "You Have Logged In " + loginCount + " Times."
+
+    }
+
     var historySize = Object.keys(obj).length;
     var names = new Array(0);
     Object.keys(obj).forEach(function (i) {

@@ -42,7 +42,7 @@
 body {
   background-color: black;
   /* margin-left: 160px; */
-  /* text-align: center; */
+  text-align: center;
   font-family:  Courier, monospace;
 
 }
@@ -212,6 +212,7 @@ nav .bottom-content {
 #user-Table tr {
   color: #1db954;
   border-radius: 0.5em;
+  text-align: left;
 }
 
 #song-div {
@@ -282,10 +283,11 @@ img {
 #webplayer-page{
   background-color: white;
 }
-#web-buttons{
+.web-buttons{
   align-content: center;
+  display: inline;
 }
-#web-buttons button{
+.web-buttons button{
   background-color: #1db954;
   border-radius: 1em;
   padding: 1em;
@@ -325,7 +327,7 @@ align-content: center;
 
 }
 #activityTables table{
-  /* text-align: center; */
+  text-align: left;
   display: inline-block;
   width: auto;
   padding: 1em;
