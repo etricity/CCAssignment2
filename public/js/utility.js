@@ -10,7 +10,11 @@ function getHashParams() {
   return hashParams;
 }
 
-//Utility to sort 2D Array By Column
+/** Utility to sort 2D Array By Column
+ *
+ * @param {First Array To Compare} x
+ * @param {Second Array To Compare} y
+ */
 function sortBySecondColumn(x, y) {
   if (x[1] === y[1]) {
     return 0;

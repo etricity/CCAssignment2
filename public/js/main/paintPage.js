@@ -4,7 +4,6 @@ function paintPage(response) {
   document.getElementById("email").innerText = response.email;
   document.getElementById("country").innerText = response.country;
   document.getElementById("product").innerText = response.product;
-
 }
 
 function paintSongData(data) {
@@ -26,15 +25,11 @@ function paintSongData(data) {
       document.getElementById("preview-url").pause();
       document.getElementById("preview-url").display = "visible";
     }
-
     document.getElementById("song-found").innerHTML = '<audio id="preview-url" controls="" name="media"> <source src="' + video_url + '" type="audio/mpeg" > </audio>';
     document.getElementById("preview-url").load();
     document.getElementById("preview-url").style.display = "inline";
   }
-
 }
-
-
 
 function paintArtistData(data) {
   document.getElementById("artist-image").innerHTML = '<img src="' + data.artists.items[0].images[0].url + '" alt= "" style="width:10em;"  > ';

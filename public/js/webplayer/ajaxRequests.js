@@ -1,4 +1,3 @@
-
 function getUserData() {
   $.ajax({
     url: 'https://api.spotify.com/v1/me',
