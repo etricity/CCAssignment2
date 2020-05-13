@@ -42,8 +42,9 @@
 body {
   background-color: black;
   /* margin-left: 160px; */
-  text-align: center;
+  text-align: left;
   font-family:  Courier, monospace;
+  align-content: left;
 
 }
 footer {
@@ -284,6 +285,7 @@ img {
   background-color: white;
 }
 .web-buttons{
+  text-align: center;
   align-content: center;
   display: inline;
 }
@@ -365,3 +367,4 @@ align-content: center;
       border-radius: 1em;
   } */
 }
+img[alt]{font-size:0.5em;}

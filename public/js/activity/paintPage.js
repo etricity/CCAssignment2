@@ -1,59 +1,72 @@
 function paintPage(data) {
-  // this.data = data;
+  //Sends Data To the Main Page Area
   drawCharts(data);
+  //Sends Data To The Nav and Title area
   paintDashboard();
 }
-
 function drawCharts(data) {
-  // console.log("TESTING");
-  console.log(data);
-
   var topSongs = data[0];
   var topArtist = data[1];
-  var searchHist = data[2];
+  var searchHistory = data[2];
 
-  drawTopArtists(topArtist);
+  //Writes User History
+  drawSearchHist(searchHistory);
+  //Writes Top 20 Songs
   drawTopSongs(topSongs);
-  //   testHist(searchHist);
-  drawSearchHist(searchHist);
+  //Writes Top 20 Artists
+  drawTopArtists(topArtist);
 }
+
+/** Writes Top Songs To Div id="songsTable"
+ * 
+ * @param {Top Songs As JSON, handles unspecified count} data 
+ */
 function drawTopSongs(data) {
-  var tableRef = document
-    .getElementById("songsTable")
-    .getElementsByTagName("tbody")[0];
-
-  var count = 0;
+  //tableRef As: Reference to the table "songsTable"
+  var tableRef = document.getElementById("songsTable").getElementsByTagName("tbody")[0];
+  //Start Song Count at: 1
+  var count = 1;
+  //For Each Song in Top Songs
   data.items.forEach((element) => {
-    count++;
+    //Song Displays as: "1. Song Name"
     var myHtmlContent = "<p>" + count + ". " + element.name + "</p>";
     var newRow = tableRef.insertRow(tableRef.rows.length);
+    //New Row For Each Song Inserted
     newRow.innerHTML = myHtmlContent;
+    count++;
   });
 }
 
+/** Writes Top Artists To Div id="artistTable"
+ * 
+ * @param {Top Artists As JSON, handles unspecified count} data 
+ */
 function drawTopArtists(data) {
-  var tableRef = document
-    .getElementById("artistTable")
-    .getElementsByTagName("tbody")[0];
-  var count = 0;
+  //tableRef As: Reference to the table "artistTable"
+  var tableRef = document.getElementById("artistTable").getElementsByTagName("tbody")[0];
+  //Start Song Count at: 1
+  var count = 1;
+  //For Each Artists in Top Artist
   data.items.forEach((element) => {
-    count++;
+    //Artist Displays as: "1. Artist Name"
     var myHtmlContent = "<p>" + count + ". " + element.name + "</p>";
     var newRow = tableRef.insertRow(tableRef.rows.length);
+    //New Row For Each Artist Inserted
     newRow.innerHTML = myHtmlContent;
+    count++;
   });
 }
 
-//Utility to sort 2D Array By Column
-function sortBySecondColumn(x, y) {
-  if (x[1] === y[1]) {
-    return 0;
-  } else {
-    return x[1] < y[1] ? -1 : 1;
-  }
-}
 
+
+/** Writes Personal Firebase Data To Div id="activityTables"
+ * 
+ *  Takes In All User Data From Firebase And Draws Relevant Data To Screen
+ * 
+ * @param {Personal Firebase History, handles unspecified count} data 
+ */
 function drawSearchHist(data) {
+  // Sanitise the Data: 
   var searchData = collapseData(data);
   searchData.sort(sortBySecondColumn);
   console.log(searchData);
@@ -181,6 +194,8 @@ function collapseData(data) {
   });
   return records;
 }
+
+
 function collapseSavedTracksData(data) {
   var records = new Array(0);
   // gets each user, single itteration
@@ -242,4 +257,18 @@ function testHist(data) {
       console.log(obj[k].songname);
     });
   });
+}
+
+
+/** Utility to sort 2D Array By Column
+ * 
+ * @param {First Array To Compare} x 
+ * @param {Second Array To Compare} y 
+ */
+function sortBySecondColumn(x, y) {
+  if (x[1] === y[1]) {
+    return 0;
+  } else {
+    return x[1] < y[1] ? -1 : 1;
+  }
 }
