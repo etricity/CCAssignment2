@@ -1,8 +1,355 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/**
+* Spotify Colors: https://usbrandcolors.com/spotify-colors/
+* #191414
+* #1DB954
+*/
+
+ /**
+ * Fonts
+ */
+
+.header {
+  display: block;
+  color: #fff;
+  padding: 20px;
+}
+.container {
+  display: table;
+  width: 100%;
+}
+.sideBar {
+  width: 20%;
+  height: auto;
+  color: #fff;
+  padding: 20px;
+  display: table-cell;
+  vertical-align: top;
+  left: 0;
+  z-index: 1;
+}
+.bodyContent {
+  padding: 20px;
+  display: table-cell;
+  vertical-align: top;
+  border-left: double #1db954;
 }
 
-a {
-  color: #00B7FF;
+/* PERMANENT STYLES  */
+
+body {
+  background-color: black;
+  text-align: center;
+  font-family:  Courier, monospace;
+  align-content: left;
+
+}
+footer {
+  background-color: #191414;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1em;
+  color: #1db954;
+  text-align: center;
+}
+
+#login {
+  background-color: #1db954;
+  text-align: center;
+  padding: 2em;
+  margin: 0 auto;
+  border-radius: 1em;
+  border-style: double;
+  border-color: #191414;
+  width: 70%;
+}
+#login a {
+  background-color: #191414;
+  color: #1db954;
+  padding: 1em;
+  border-radius: 1em;
+
+}
+#login a:hover {
+  background-color: #1db954;
+  color: #191414;
+  padding: 1em;
+  border-radius: 4em;
+  border-color: #191414;
+
+}
+
+#song-link {
+  align-content: center;
+  text-align: center;
+  background-color: #1db954;
+  border-radius: 1em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+/* DYNAMIC STYLES */
+
+nav {
+  height: 100%; 
+  background-color: #111;
+  overflow-x: hidden; 
+  border-style: double;
+  border-color: #1db954;
+}
+
+.link-content {
+  margin-top: 1em;
+  background-color: #1db954;
+  border-radius: 0.5em;
+  text-align: center;
+  margin: 1em;
+  padding: 1em;
+}
+
+#title {
+  background-color: #1db954;
+  padding: 2em;
+  border-radius: 0.5em;
+  border-style: double;
+  border-color: #191414;
+}
+
+#title h1 {
+  color: #191414;
+  text-decoration: underline;
+  text-align: center;
+}
+
+#artist-image {
+  text-align: center;
+  padding: 1em;
+}
+#album-image {
+  text-align: center;
+  padding: 1em;
+}
+.full-content {
+  background-color: #191414;
+  border-radius: 3em;
+  text-align: center;
+  margin: 1em;
+  size: 3em;
+  padding: 2em;
+  color: #1db954;
+}
+nav .full-content:hover {
+  color: #191414;
+  background-color: #1db954;
+}
+
+.full-content #songQuery {
+  background-color: #1db954;
+  color: white;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+nav .bottom-content {
+  position: fixed;
+  background-color: #1db954;
+  border-radius: 3em;
+  margin: 1em;
+  size: 2em;
+  padding: 1em;
+}
+
+#readIn {
+  background-color: #1db954;
+  border-radius: 0.5em;
+  text-align: center;
+  margin: 1em;
+}
+.column {
+  float: left;
+  width: 20%;
+}
+
+.row {
+  margin: 4em;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#table-div {
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin: 1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+}
+
+#user-Table {
+  color: #1db954;
+  border-radius: 0.5em;
+  align-content: center;
+}
+#user-Table tr {
+  color: #1db954;
+  border-radius: 0.5em;
+  text-align: left;
+}
+
+#song-div {
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin: 1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+  visibility: hidden;
+  width: auto;
+}
+#album-div {
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin: 1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+  visibility: hidden;
+  color: #1db954;
+  width: auto;
+}
+
+#artist-div {
+  background-color: #191414;
+  border-radius: 0.5em;
+  margin: 1em;
+  align-content: center;
+  display: inline-block;
+  padding: 1em;
+  visibility: hidden;
+  color: #1db954;
+  width: auto;
+}
+
+#song-Table tr {
+  color: #1db954;
+  border-radius: 0.5em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+#center {
+  height: 20%;
+}
+
+#follow-link {
+  align-content: center;
+  text-align: center;
+  background-color: #1db954;
+  border-radius: 1em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+#follow-link a {
+  align-content: center;
+}
+#follow-link a:visited {
+  color: #191414;
+}
+
+#webplayer-page{
+  background-color: white;
+}
+.web-buttons{
+  text-align: center;
+  align-content: center;
+  display: inline;
+}
+.web-buttons button{
+  background-color: #1db954;
+  border-radius: 1em;
+  padding: 1em;
+
+}
+
+.charts{
+  display: inline-block;
+  background-color: #1db954;
+  border-radius: 2em;
+  padding: 2em;
+  margin: 1em;
+  align-content: center;
+  width: 90%;
+}
+
+.charts #songname{
+  display: inline-block;
+  background-color: #1db954;
+  border-radius: 2em;
+  margin: 1em;
+}
+.charts #trackName{
+  display: inline-block;
+  background-color: #1db954;
+  border-radius: 2em;
+  margin: 1em;
+}
+#padding{
+  padding-top: 2em;
+}
+
+#activityTables{
+  background-color: #1db954;
+  display: inline-block;
+  align-content: center;
+  text-align: left;
+  padding: 2em;
+  margin: 1em;
+  border-radius: 2em;
+  width: 90%;
+}
+#activityTables table{
+  align-content: center;
+  text-align: left;
+  display: inline;
+}
+footer img{
+  height: 20px;
+  margin-left: 1em;
+  text-align: right;
+}
+img[alt]{font-size:0.5em;}
+
+
+/* SMALL SCREENS */
+
+@media (max-width: 760px) {
+  .container,
+  .sideBar,
+  .bodyContent {
+    display: block;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .bodyContent {
+    border-left: none;
+    border-top: double #1db954;
+    margin-bottom: 3em;
+  }
+  nav {
+    border-bottom: double #1db954;
+  }
+  .column {
+    width: auto;
+  }
+
 }

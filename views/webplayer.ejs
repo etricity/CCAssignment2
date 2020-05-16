@@ -1,0 +1,113 @@
+<!doctype html>
+
+<!--Main document for the Page. Other handlebar files are passed to this for dynamic html-->
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<div class="header">
+  <div id='title'>
+    <h1 id='greeting'></h1>
+  </div>
+
+</div>
+<div class="container">
+  <div class="sideBar">
+    <nav>
+      <div class='full-content'>
+        <p> S.P.A.D.E</p>
+      </div>
+
+      <div id='table-div'>
+        <table id='user-Table'>
+          <tr>
+            <td>Name </td>
+            <td id='name'></td>
+          </tr>
+          <tr>
+            <td>Country</td>
+            <td id='country'></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td id='email'></td>
+          </tr>
+          <tr>
+            <td>Product</td>
+            <td id='product'></td>
+          </tr>
+        </table>
+      </div>
+
+
+      <div class='link-content'>
+        <a id="dashboard">Dashboard</a>
+      </div>
+      <div class='link-content'>
+        <a id = "activity"> My Activity</a>
+      </div>
+      <div class='link-content'>
+        <a href="https://www.spotify.com/au/"> Go To Spotify</a>
+      </div>
+      <div class='link-content'>
+        <a id = "logout"> Log-Out</a>
+      </div>
+    </nav>
+
+  </div>
+  <div class="bodyContent">
+
+    <body>
+
+      <!--Core Firebase JS SDK (must be listed first) -->
+      <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+      <!--Adding Google analytics product -->
+      <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+      <!--Adding Google Analytics config specify to this project -->
+      <script type="text/javascript" src="/js/analyticsConfig.js"></script>
+
+
+      <div class="full-content">
+
+        <h1>Spotify Web Player</h1>
+        <p>To get started, open spotify on your local device and connect to the Spotify Web Player device.</p>
+        <p id='status'> Waiting...</p>
+
+      </div>
+
+      <div class="web-buttons">
+        <button id="play_pause" onclick="playPause()">Play/Pause</button>
+        <button id="vol_up" onclick="volUp()">Increase Volume</button>
+        <button id="vol_down" onclick="volDown()">Decrease Volume</button>
+      </div>
+
+    </body>
+
+  </div>
+</div>
+
+<footer> S.P.A.D.E &COPY; </footer>
+
+
+<script src="https://sdk.scdn.co/spotify-player.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/webplayer/webplayer.js"></script>
+<script type="text/javascript" src="/js/webplayer/ajaxRequests.js"></script>
+<script type="text/javascript" src="/js/webplayer/paintPage.js"></script>
+<script type="text/javascript" src="/js/utility.js"></script>
+
+<script>
+  var params = getHashParams();
+
+ //Setting links for website navigation
+ var link = "/spotify/#" + $.param(params);
+ document.getElementById("dashboard").setAttribute("href", link);
+ document.getElementById("activity").setAttribute("href", "/spotify/activity/#" + $.param(params));
+ document.getElementById("logout").setAttribute("href", "/");
+ paintDashboard();
+
+</script>

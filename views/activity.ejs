@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<div class="header">
+  <div id='title'>
+    <h1 id='greeting'></h1>
+  </div>
+</div>
+<div class="container">
+  <div class="sideBar">
+    <nav>
+      <div class='full-content'>
+        <p> S.P.A.D.E</p>
+      </div>
+      <div id='table-div'>
+        <table id='user-Table'>
+          <tr>
+            <td>Name </td>
+            <td id='name'></td>
+          </tr>
+          <tr>
+            <td>Country</td>
+            <td id='country'></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td id='email'></td>
+          </tr>
+          <tr>
+            <td>Product</td>
+            <td id='product'></td>
+          </tr>
+        </table>
+      </div>
+      <div class='link-content'>
+        <a id = "dashboard"> Dashboard</a>
+      </div>
+      <div class='link-content'>
+        <a id= "webplayer">Spotify Web Player</a>
+      </div>
+      <div class='link-content'>
+        <a href="https://www.spotify.com/au/"> Go To Spotify</a>
+      </div>
+      <div class='link-content'>
+        <a id = "logout"> Log-Out</a>
+      </div>
+    </nav>
+  </div>
+  <div class="bodyContent">
+    <body>
+      <div id="login">
+        <h1>My Activity</h1>
+      </div>
+      <div class="charts">
+        <h2 id="loginCount"></h2>
+        <div id="songname"></div>
+        <div id="trackName"></div>
+      </div>
+      <div id="activityTables">
+        <table id="artistTable">
+          <thead>
+            <tr>
+              <th>Top Artists</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <table id="songsTable">
+          <thead>
+            <tr>
+              <th>Top Songs</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <div class="web-buttons">
+          <button id="addTopSongs">Add top songs to my SPADE playlist</button>
+        </div>
+        <div id="padding"></div>
+      </div>
+    </body>
+  </div>
+</div>
+<footer> S.P.A.D.E &COPY; </footer>
+
+<!--Core Firebase JS SDK (must be listed first) -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<!--Adding Google analytics product -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<!--Load the AJAX API For Charts-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!--Adding Google Analytics config specify to this project - Local JS-->
+<script type="text/javascript" src="/js/analyticsConfig.js"></script>
+<script type="text/javascript" src="/js/utility.js"></script>
+<script type="text/javascript" src="/js/activity/dataRequests.js"></script>
+<script type="text/javascript" src="/js/activity/paintPage.js"></script>
+<script>
+  window.onload = () => {
+    var data = getPersonalisedData();
+
+    //Setting links for website navigation
+    var params = getHashParams();
+     var link = "/spotify/#" + $.param(params);
+     document.getElementById("dashboard").setAttribute("href", link);
+     document.getElementById("webplayer").setAttribute("href", "/spotify/webplayer/#" + $.param(params));
+     document.getElementById("logout").setAttribute("href", "/");
+  };
+
+  function success(data) {
+    paintPage(data);
+  }
+
+  $('#addTopSongs').on('click', function (ev) {
+    //Stop default post call
+    ev.preventDefault();
+      addTopSongs();
+  });
+
+</script>
